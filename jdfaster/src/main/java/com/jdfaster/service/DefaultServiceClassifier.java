@@ -9,14 +9,15 @@ public class DefaultServiceClassifier implements ServiceClassifier {
 		return true;
 	}
 
-	//호출 된 클래스의 Full Path 정보를 리
+	// 호출 된 클래스의 Full Path 정보를 리
 	@Override
 	public String getName(Signature signature, Object... args) {
 		return signature.getDeclaringTypeName() + "." + signature.getName();
 	}
+
 	// Service Advisor 부모 클래스 형태로 DefaultServiceAdapter 생.
 	private ServiceAdapter serviceAdapter = new DefaultServiceAdapter();
-	
+
 	public void setServiceAdapter(ServiceAdapter serviceAdapter) {
 		this.serviceAdapter = serviceAdapter;
 	}

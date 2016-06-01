@@ -15,10 +15,12 @@ import org.springframework.util.ClassUtils;
 
 import net.sf.common.util.Closure;
 import net.sf.common.util.SyncCtrlUtils;
+
 // ApplicationContextAware :Application Context 를 객체로 받아서 사용가능한 인터페이스 
 public class DefaultScenarioExecutor implements ApplicationContextAware, ScenarioExecutor {
 
 	private static Map<String, BeanInfo> beanInfos = new ConcurrentHashMap<String, BeanInfo>();
+
 	// ScenarioExecutor 의 오버라이드.
 	@Override
 	public void execute(final String name) throws Exception {
@@ -36,7 +38,7 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 					throw new IllegalArgumentException("name pattern must be 'className.methodName'!");
 				String className = name.substring(0, index);
 				String methodName = name.substring(index + 1);
-				// 클래스 로딩 
+				// 클래스 로딩
 				clazz = ClassUtils.resolveClassName(className, ClassUtils.getDefaultClassLoader());
 				// 메서드명 확인.
 				for (Method m : clazz.getMethods()) {
