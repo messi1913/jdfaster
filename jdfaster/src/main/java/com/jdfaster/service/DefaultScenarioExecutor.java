@@ -24,7 +24,7 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 	// ScenarioExecutor 의 오버라이드.
 	@Override
 	public void execute(final String name) throws Exception {
-		// BeanInfo 객체를 SyncCtrlUtils 통해서 갖고옴.(싱글톤 & 동기방식)
+		// BeanInfo 객체를 SyncCtrlUtils 통해서 갖고옴.(싱글톤 & 동기방식) 
 		BeanInfo beanInfo = SyncCtrlUtils.wrap(name, beanInfos, name, new Closure<BeanInfo, Exception>() {
 			@Override
 			public BeanInfo execute() throws Exception {
@@ -38,7 +38,7 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 					throw new IllegalArgumentException("name pattern must be 'className.methodName'!");
 				String className = name.substring(0, index);
 				String methodName = name.substring(index + 1);
-				// 클래스 로딩
+				// 클래스 유틸을 통한 클래스 로딩
 				clazz = ClassUtils.resolveClassName(className, ClassUtils.getDefaultClassLoader());
 				// 메서드명 확인.
 				for (Method m : clazz.getMethods()) {
