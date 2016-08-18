@@ -35,7 +35,7 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 
 				int index = name.lastIndexOf('.');
 				if (index < 1)
-					throw new IllegalArgumentException("name pattern must be 'className.methodName'!");
+					throw new IllegalArgumentException("name pattern should be 'className.methodName'!");
 				String className = name.substring(0, index);
 				String methodName = name.substring(index + 1);
 				// 클래스 유틸을 통한 클래스 로딩
