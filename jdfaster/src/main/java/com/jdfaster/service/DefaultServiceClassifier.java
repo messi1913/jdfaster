@@ -9,7 +9,7 @@ public class DefaultServiceClassifier implements ServiceClassifier {
 		return true;
 	}
 
-	// 호출 된 클래스의 Full Path 정보를 리
+	// 호출 된 클래스의 Full Path 정보를 리턴 
 	@Override
 	public String getName(Signature signature, Object... args) {
 		return signature.getDeclaringTypeName() + "." + signature.getName();
