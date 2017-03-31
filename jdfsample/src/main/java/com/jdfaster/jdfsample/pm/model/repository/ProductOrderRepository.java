@@ -1,10 +1,10 @@
-package com.jdfaster.jdfsample.model.repository;
+package com.jdfaster.jdfsample.pm.model.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jdfaster.jdfsample.model.entity.ProductOrder;
+import com.jdfaster.jdfsample.pm.model.entity.ProductOrder;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, String>{
 	

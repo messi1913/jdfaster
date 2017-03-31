@@ -1,4 +1,4 @@
-package com.jdfaster.jdfsample.model.entity;
+package com.jdfaster.jdfsample.pm.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +33,10 @@ public class ProductOrder {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "ProductOrder [id=" + id + ", quantity=" + quantity + ", name=" + name + "]";
 	}
 	
 	
