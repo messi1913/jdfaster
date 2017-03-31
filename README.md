@@ -8,5 +8,4 @@
 
 5. If you want to see H2 DB -> http://localhost:8080/console/ --> then you can see DB in your local PC.
 
-6. TODO : added modules and change H2DB to PostgreSQL or MongoDB. 
-
+6. TODO : added modules and change H2DB to PostgreSQL or MongoDB. Apply to JMeter for Test.
