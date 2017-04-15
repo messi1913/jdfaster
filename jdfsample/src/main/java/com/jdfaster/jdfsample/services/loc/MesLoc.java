@@ -7,9 +7,9 @@ public class MesLoc {
 	private String locName;
 	// STORE/LINE
 	private String locType;
-	private String createUsername;
+	private String createUserId;
 	private Date createTime;
-	private String updateUsername;
+	private String updateUserId;
 	private Date updateTime;
 
 	public String getLocCode() {
@@ -36,12 +36,12 @@ public class MesLoc {
 		this.locType = locType;
 	}
 
-	public String getCreateUsername() {
-		return createUsername;
+	public String getCreateUserId() {
+		return createUserId;
 	}
 
-	public void setCreateUsername(String createUsername) {
-		this.createUsername = createUsername;
+	public void setCreateUserId(String createUserId) {
+		this.createUserId = createUserId;
 	}
 
 	public Date getCreateTime() {
@@ -52,12 +52,12 @@ public class MesLoc {
 		this.createTime = createTime;
 	}
 
-	public String getUpdateUsername() {
-		return updateUsername;
+	public String getUpdateUserId() {
+		return updateUserId;
 	}
 
-	public void setUpdateUsername(String updateUsername) {
-		this.updateUsername = updateUsername;
+	public void setUpdateUserId(String updateUserId) {
+		this.updateUserId = updateUserId;
 	}
 
 	public Date getUpdateTime() {

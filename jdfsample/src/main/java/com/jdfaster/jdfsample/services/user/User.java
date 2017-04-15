@@ -6,9 +6,9 @@ public class User {
 	private String userId;
 	private String userName;
 	private String password;
-	private String createUsername;
+	private String createUserId;
 	private Date createTime;
-	private String updateUsername;
+	private String updateUserId;
 	private Date updateTime;
 
 	public String getUserId() {
@@ -35,12 +35,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getCreateUsername() {
-		return createUsername;
+	public String getCreateUserId() {
+		return createUserId;
 	}
 
-	public void setCreateUsername(String createUsername) {
-		this.createUsername = createUsername;
+	public void setCreateUserId(String createUserId) {
+		this.createUserId = createUserId;
 	}
 
 	public Date getCreateTime() {
@@ -51,12 +51,12 @@ public class User {
 		this.createTime = createTime;
 	}
 
-	public String getUpdateUsername() {
-		return updateUsername;
+	public String getUpdateUserId() {
+		return updateUserId;
 	}
 
-	public void setUpdateUsername(String updateUsername) {
-		this.updateUsername = updateUsername;
+	public void setUpdateUserId(String updateUserId) {
+		this.updateUserId = updateUserId;
 	}
 
 	public Date getUpdateTime() {
