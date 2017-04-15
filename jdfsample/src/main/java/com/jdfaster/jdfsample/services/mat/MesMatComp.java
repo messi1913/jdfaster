@@ -1,15 +1,35 @@
 package com.jdfaster.jdfsample.services.mat;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name ="mes_mat_comp")
+@IdClass(MatCompositeKey.class)
 public class MesMatComp {
+	@Id
+	@Column (name = "matCode", nullable = false, length = 50)
 	private String matCode;
+	@Column (name = "compMatCode", length = 50)
 	private String compMatCode;
+	@Column (name = "compMatQty", length = 100)
 	private Integer compMatQty;
+	@Column (name = "operCode", length = 100)
 	private String operCode;
+	@Column (name = "createUserId", length = 100)
 	private String createUserId;
+	@Column (name = "createTime")
 	private Date createTime;
+	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
+	@Column (name = "updateTime")
 	private Date updateTime;
 
 	public String getMatCode() {
@@ -75,4 +95,10 @@ public class MesMatComp {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+}
+
+class MatCompositeKey implements Serializable{
+	private String matCode;
+	private String compMatCode;
 }

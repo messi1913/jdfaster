@@ -2,23 +2,47 @@ package com.jdfaster.jdfsample.services.lot;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="mes_lot")
 public class MesLot {
+	@Id
+	@Column (name = "lotId", nullable = false, length = 100)
 	private String lotId;
 	// CREATE, OPERIN, OPERSTART, OPEREND, SHIP, STORE, USE, DELETE
+	@Column (name = "lotStatus", length = 50)
 	private String lotStatus;
+	@Column (name = "matCode", length = 50)
 	private String matCode;
+	@Column (name = "lotQty", length = 100)
 	private Integer lotQty;
+	@Column (name = "locCode", length = 50)
 	private String locCode;
+	@Column (name = "flowCode", length = 50)
 	private String flowCode;
+	@Column (name = "operCode", length = 50)
 	private String operCode;
+	@Column (name = "operInTime")
 	private Date operInTime;
+	@Column (name = "operStartTime")
 	private Date operStartTime;
+	@Column (name = "operEndTime")
 	private Date operEndTime;
+	@Column (name = "orderId", length = 100)
 	private String orderId;
+	@Column (name = "compOrderId", length = 100)
 	private String compOrderId;
+	@Column (name = "createUserId", length = 100)
 	private String createUserId;
+	@Column (name = "createTime")
 	private Date createTime;
+	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
+	@Column (name = "updateTime")
 	private Date updateTime;
 
 	public String getLotId() {

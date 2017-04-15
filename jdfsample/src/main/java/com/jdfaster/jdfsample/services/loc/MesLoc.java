@@ -2,14 +2,29 @@ package com.jdfaster.jdfsample.services.loc;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="mes_flow_oper")
 public class MesLoc {
+	@Id
+	@Column (name = "locCode", nullable = false, length = 100)
 	private String locCode;
+	@Column (name = "locName", length = 500)
 	private String locName;
 	// STORE/LINE
+	@Column (name = "locType", length = 50)
 	private String locType;
+	@Column (name = "createUserId", length = 100)
 	private String createUserId;
+	@Column (name = "createTime", length = 16)
 	private Date createTime;
+	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
+	@Column (name = "updateTime", length = 16)
 	private Date updateTime;
 
 	public String getLocCode() {

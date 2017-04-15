@@ -1,15 +1,36 @@
 package com.jdfaster.jdfsample.services.lot;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="mes_lot_comp")
+@IdClass(LotCompositeKey.class)
 public class MesLotComp {
+	@Id
+	@Column (name = "lotId", nullable = false, length = 100)
 	private String lotId;
+	@Id
+	@Column (name = "compLotId", nullable = false, length = 100)
 	private String compLotId;
+	@Id
+	@Column (name = "compMatSn", nullable = false, length = 100)
 	private String compMatSn;
+	@Column (name = "compMatQty", length = 100)
 	private Integer compMatQty;
+	@Column (name = "createUserId", length = 100)
 	private String createUserId;
+	@Column (name = "createTime")
 	private Date createTime;
+	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
+	@Column (name = "updateTime")
 	private Date updateTime;
 	public String getLotId() {
 		return lotId;
@@ -59,4 +80,11 @@ public class MesLotComp {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+}
+
+class LotCompositeKey implements Serializable{
+	private String lotId;
+	private String compLotId;
+	private String compMatSn;
 }

@@ -1,14 +1,33 @@
 package com.jdfaster.jdfsample.services.flow;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="mes_flow_oper")
+@IdClass(FlowCompositeKey.class)
 public class MesFlowOper {
+	@Id
+	@Column (name = "flowCode", nullable = false, length = 50)
 	private String flowCode;
+	@Id
+	@Column (name = "operCode", nullable = false, length = 50)
 	private String operCode;
+	@Column (name = "seqNo", length = 100)
 	private Integer seqNo;
+	@Column (name = "createUserId", length = 100)
 	private String createUserId;
+	@Column (name = "createTime")
 	private Date createTime;
+	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
+	@Column (name = "updateTime")
 	private Date updateTime;
 
 	public String getFlowCode() {
@@ -66,4 +85,10 @@ public class MesFlowOper {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+}
+
+class FlowCompositeKey implements Serializable{
+	private String flowCode;
+	private String operCode;
 }
