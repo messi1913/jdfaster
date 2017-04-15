@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.dbist.dml.jdbc.AbstractQueryMapper;
 
-public class QueryMapperMysql extends AbstractQueryMapper {
+public class QueryMapperH2 extends AbstractQueryMapper {
 
 	public String getDbType() {
 		return "h2";
