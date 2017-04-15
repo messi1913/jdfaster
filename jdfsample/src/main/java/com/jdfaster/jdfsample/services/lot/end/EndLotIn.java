@@ -5,7 +5,6 @@ import java.util.Date;
 public class EndLotIn {
 	private String lotId;
 	private String lotStatus;
-	private Date operStartTime;
 	private Date operEndTime;
 	private String compOrderId;
 	private String compLotId;
@@ -23,12 +22,6 @@ public class EndLotIn {
 	}
 	public void setLotStatus(String lotStatus) {
 		this.lotStatus = lotStatus;
-	}
-	public Date getOperStartTime() {
-		return operStartTime;
-	}
-	public void setOperStartTime(Date operStartTime) {
-		this.operStartTime = operStartTime;
 	}
 	public Date getOperEndTime() {
 		return operEndTime;

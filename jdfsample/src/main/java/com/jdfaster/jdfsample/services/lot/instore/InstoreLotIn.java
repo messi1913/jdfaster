@@ -7,6 +7,7 @@ public class InstoreLotIn {
 	private String compLotId;
 	private String compMatSn;
 	private Integer compMatQty;
+	
 	public String getLotId() {
 		return lotId;
 	}
