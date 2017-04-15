@@ -1,38 +1,42 @@
 package com.jdfaster.jdfsample.services.lot.ship;
 
-import java.util.Date;
+import java.util.List;
 
 public class ShipLotIn {
-	private String lotId;
-	private String lotStatus;
-	private Date operStartTime;
-	private Date operEndTime;
-	
-	
-	public String getLotId() {
-		return lotId;
+	private String locCode;
+	private String operCode;
+	private String toLocCode;
+	private List<String> lotIdList;
+
+	public String getLocCode() {
+		return locCode;
 	}
-	public void setLotId(String lotId) {
-		this.lotId = lotId;
+
+	public void setLocCode(String locCode) {
+		this.locCode = locCode;
 	}
-	public String getLotStatus() {
-		return lotStatus;
+
+	public String getOperCode() {
+		return operCode;
 	}
-	public void setLotStatus(String lotStatus) {
-		this.lotStatus = lotStatus;
+
+	public void setOperCode(String operCode) {
+		this.operCode = operCode;
 	}
-	public Date getOperStartTime() {
-		return operStartTime;
+
+	public String getToLocCode() {
+		return toLocCode;
 	}
-	public void setOperStartTime(Date operStartTime) {
-		this.operStartTime = operStartTime;
+
+	public void setToLocCode(String toLocCode) {
+		this.toLocCode = toLocCode;
 	}
-	public Date getOperEndTime() {
-		return operEndTime;
+
+	public List<String> getLotIdList() {
+		return lotIdList;
 	}
-	public void setOperEndTime(Date operEndTime) {
-		this.operEndTime = operEndTime;
+
+	public void setLotIdList(List<String> lotIdList) {
+		this.lotIdList = lotIdList;
 	}
-	
-	
 }
