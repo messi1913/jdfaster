@@ -2,13 +2,28 @@ package com.jdfaster.jdfsample.services.user;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="user")
 public class User {
+	@Id
+	@Column (name = "userId", nullable = false, length = 100)
 	private String userId;
+	@Column (name = "userName", length = 500)
 	private String userName;
+	@Column (name = "password", length = 100)
 	private String password;
+	@Column (name = "createUserId", length = 100)
 	private String createUserId;
+	@Column (name = "createTime", length = 16)
 	private Date createTime;
+	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
+	@Column (name = "updateTime", length = 16)
 	private Date updateTime;
 
 	public String getUserId() {
