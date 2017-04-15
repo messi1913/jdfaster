@@ -26,7 +26,7 @@ public class PmOrderingController {
 		System.out.println("getMethod : "+id);
 		return oRep.readProductOrderById(id);
 	}
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(path="/test/",method = RequestMethod.POST)
 	public ProductOrder create(@RequestBody ProductOrder productOrder) {
 		System.out.println("createMethod : "+productOrder.toString());
 		return oRep.save(productOrder);
