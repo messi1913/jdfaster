@@ -13,7 +13,7 @@ public class MesLot {
 	@Id
 	@Column(name = "lotId", nullable = false, length = 100)
 	private String lotId;
-	// CREATE, OPERIN, OPERSTART, OPEREND, SHIP, STORE, USE, DELETE
+	// CREATE, OPERIN, OPERSTART, OPEREND, PACK, SHIP, STORE, USE, DELETE
 	@Column(name = "lotStatus", length = 50)
 	private String lotStatus;
 	@Column(name = "matCode", length = 50)
