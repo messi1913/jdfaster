@@ -43,7 +43,7 @@ public class CreateLot {
 		lot.setLotStatus("OPERIN");
 		lot.setOperCode(input.getOperCode());
 		lot.setOperInTime(new Date());
-		lot.setPackedFlag("N");
+		lot.setpLotId(" ");
 		// TODO
 		// em.persist(lot);
 		SvcUtils.updateLot(lot, 1, "OPERIN");
