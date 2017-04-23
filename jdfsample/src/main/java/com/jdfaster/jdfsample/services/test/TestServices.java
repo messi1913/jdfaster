@@ -1,5 +1,9 @@
 package com.jdfaster.jdfsample.services.test;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,13 +16,17 @@ import com.jdfaster.jdfsample.services.test.scen01.TestScen01;
 import com.jdfaster.jdfsample.services.test.scen01.TestScen01In;
 import com.jdfaster.jdfsample.services.test.scen01.TestScen01Out;
 
+@Transactional
 @RestController
 @RequestMapping("/services/test/")
 public class TestServices {
 
-	@RequestMapping(method = RequestMethod.POST, path = "/md/")
-	public TestMdOut md(@RequestBody TestMdIn input) throws Exception {
-		return new TestMd().md(input);
+	@Autowired
+	private EntityManager em;
+	
+	@RequestMapping(method = RequestMethod.GET, path = "/md/")
+	public TestMdOut md() throws Exception {
+		return new TestMd().md(new TestMdIn(), em);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/scen01/")
