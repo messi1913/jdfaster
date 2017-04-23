@@ -1,18 +1,22 @@
 package com.jdfaster.jdfsample.utils;
 
 import java.util.Collection;
-import java.util.Date;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.jdfaster.jdfsample.services.lot.MesLot;
-import com.jdfaster.jdfsample.services.lot.MesLotHist;
+import com.jdfaster.jdfsample.controller.CommonController;
 
 import net.sf.common.util.BeanUtils;
 
 public class SvcUtils {
+
+	public static EntityManager getEm() throws Exception {
+		EntityManager em = getBean(CommonController.class).getEm();
+		return em;
+	}
 
 	public static <T> T getBean(Class<T> type) throws Exception {
 		return BeanUtils.getInstance("jdfsample").get(type);
