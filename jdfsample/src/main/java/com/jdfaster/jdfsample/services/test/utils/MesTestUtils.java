@@ -8,7 +8,7 @@ import com.jdfaster.jdfsample.services.order.MesOrder;
 
 public class MesTestUtils {
 	private static int lineSize = 200;
-	private static List<String> LINES_ALL;
+	private static List<String> LINES_ALL = new ArrayList<String>(lineSize);
 	private static List<String> LINES_RUNNING = new ArrayList<String>(lineSize);
 
 	static {

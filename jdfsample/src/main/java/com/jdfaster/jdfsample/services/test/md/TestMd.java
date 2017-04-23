@@ -3,6 +3,10 @@ package com.jdfaster.jdfsample.services.test.md;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.jdfaster.jdfsample.services.flow.MesFlow;
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.loc.MesLoc;
@@ -11,8 +15,12 @@ import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.services.oper.MesOper;
 import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 
+
 public class TestMd {
-	public TestMdOut md(TestMdIn input) throws Exception {
+	
+	public TestMdOut md(TestMdIn input, EntityManager em) throws Exception {
+		
+		
 		String flowCode = "F-MP001";
 
 		// Flow
@@ -20,7 +28,8 @@ public class TestMd {
 			MesFlow flow = new MesFlow();
 			flow.setFlowCode(flowCode);
 			flow.setFlowName("Mobile Phone Flow");
-
+			em.persist(flow);
+			
 			// TODO insert flow
 		}
 
@@ -35,12 +44,13 @@ public class TestMd {
 				oper.setOperCode("O-ASSY");
 				oper.setOperName("Assembly Oper");
 				opers.add(oper);
-
+				em.persist(oper);
 				MesFlowOper flowOper = new MesFlowOper();
 				flowOper.setSeqNo(++i);
 				flowOper.setFlowCode(flowCode);
 				flowOper.setOperCode("O-ASSY");
 				flowOpers.add(flowOper);
+				em.persist(flowOper);
 			}
 
 			{
@@ -48,12 +58,13 @@ public class TestMd {
 				oper.setOperCode("O-TEST");
 				oper.setOperName("Test Oper");
 				opers.add(oper);
-
+				em.persist(oper);
 				MesFlowOper flowOper = new MesFlowOper();
 				flowOper.setSeqNo(++i);
 				flowOper.setFlowCode(flowCode);
 				flowOper.setOperCode("O-TEST");
 				flowOpers.add(flowOper);
+				em.persist(flowOper);
 			}
 
 			{
@@ -61,12 +72,14 @@ public class TestMd {
 				oper.setOperCode("O-PACK");
 				oper.setOperName("Packing Oper");
 				opers.add(oper);
+				em.persist(oper);
 
 				MesFlowOper flowOper = new MesFlowOper();
 				flowOper.setSeqNo(++i);
 				flowOper.setFlowCode(flowCode);
 				flowOper.setOperCode("O-PACK");
 				flowOpers.add(flowOper);
+				em.persist(flowOper);
 			}
 
 			{
@@ -74,15 +87,16 @@ public class TestMd {
 				oper.setOperCode("O-SHIP");
 				oper.setOperName("Shipping Oper");
 				opers.add(oper);
+				em.persist(oper);
 
 				MesFlowOper flowOper = new MesFlowOper();
 				flowOper.setSeqNo(++i);
 				flowOper.setFlowCode(flowCode);
 				flowOper.setOperCode("O-SHIP");
 				flowOpers.add(flowOper);
+				em.persist(flowOper);
 			}
 
-			// TODO insert oper and oper flow
 		}
 
 		// Store
@@ -95,6 +109,7 @@ public class TestMd {
 				store.setLocName("Raw Material Store");
 				store.setLocType("STORE");
 				stores.add(store);
+				em.persist(store);
 			}
 
 			{
@@ -103,6 +118,7 @@ public class TestMd {
 				store.setLocName("Final Goods Store");
 				store.setLocType("STORE");
 				stores.add(store);
+				em.persist(store);
 			}
 
 			// TODO insert stores
@@ -119,6 +135,8 @@ public class TestMd {
 				line.setLocType("LINE");
 
 				lines.add(line);
+				
+				em.persist(line);
 			}
 
 			// TODO insert lines
@@ -133,7 +151,7 @@ public class TestMd {
 			prod.setMatName("Galaxy S8");
 			prod.setMatType("FG");
 			prod.setFlowCode(flowCode);
-
+			em.persist(prod);
 			// TODO insert prod
 		}
 
@@ -148,6 +166,7 @@ public class TestMd {
 				comp.setMatName("PCBA for Galaxy S8");
 				comp.setMatType("SG");
 				comps.add(comp);
+				em.persist(comp);
 
 				MesMatComp matComp = new MesMatComp();
 				matComp.setMatCode(matCode);
@@ -155,6 +174,7 @@ public class TestMd {
 				matComp.setCompMatQty(1);
 				matComp.setOperCode("O-ASSY");
 				matComps.add(matComp);
+				em.persist(matComp);
 			}
 
 			{
@@ -162,6 +182,7 @@ public class TestMd {
 				comp.setMatCode("M-OLED-568ppi");
 				comp.setMatName("OLED 568ppi");
 				comp.setMatType("RM");
+				em.persist(comp);
 
 				MesMatComp matComp = new MesMatComp();
 				matComp.setMatCode(matCode);
@@ -169,6 +190,7 @@ public class TestMd {
 				matComp.setCompMatQty(1);
 				matComp.setOperCode("O-ASSY");
 				matComps.add(matComp);
+				em.persist(matComp);
 			}
 
 			{
@@ -176,6 +198,7 @@ public class TestMd {
 				comp.setMatCode("M-B-3000mAh");
 				comp.setMatName("Battery 300mAh");
 				comp.setMatType("RM");
+				em.persist(comp);
 
 				MesMatComp matComp = new MesMatComp();
 				matComp.setMatCode(matCode);
@@ -183,6 +206,7 @@ public class TestMd {
 				matComp.setCompMatQty(1);
 				matComp.setOperCode("O-ASSY");
 				matComps.add(matComp);
+				em.persist(matComp);
 			}
 
 			{
@@ -190,6 +214,7 @@ public class TestMd {
 				comp.setMatCode("M-EP-TA20KPK");
 				comp.setMatName("Fast Charging Adapter");
 				comp.setMatType("RM");
+				em.persist(comp);
 
 				MesMatComp matComp = new MesMatComp();
 				matComp.setMatCode(matCode);
@@ -197,6 +222,7 @@ public class TestMd {
 				matComp.setCompMatQty(1);
 				matComp.setOperCode("O-ASSY");
 				matComps.add(matComp);
+				em.persist(matComp);
 			}
 
 			// TODO insert comps and matComps
