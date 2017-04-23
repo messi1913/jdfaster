@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.lot.MesLot;
+import com.jdfaster.jdfsample.services.lot.utils.LotUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class EndLot {
@@ -22,14 +23,14 @@ public class EndLot {
 		// TODO
 		int lastHistSeq = 0;
 
-		SvcUtils.endLot(lot, ++lastHistSeq, "OPEREND");
+		LotUtils.endLot(lot, ++lastHistSeq, "OPEREND");
 
 		MesFlowOper currFlowOper = null;
 		MesFlowOper nextFlowOper = null;
 		lot.setLotStatus("OPERIN");
 		lot.setOperCode(nextFlowOper.getOperCode());
 		lot.setOperInTime(new Date());
-		SvcUtils.updateLot(lot, ++lastHistSeq, "OPERIN");
+		LotUtils.updateLot(lot, ++lastHistSeq, "OPERIN");
 
 		EndLotOut output = new EndLotOut();
 		return output;

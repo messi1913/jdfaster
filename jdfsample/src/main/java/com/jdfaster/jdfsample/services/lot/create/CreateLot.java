@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.lot.MesLot;
+import com.jdfaster.jdfsample.services.lot.utils.LotUtils;
 import com.jdfaster.jdfsample.services.mat.MesMat;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.utils.SvcUtils;
@@ -46,7 +47,7 @@ public class CreateLot {
 		lot.setpLotId(" ");
 		// TODO
 		// em.persist(lot);
-		SvcUtils.updateLot(lot, 1, "OPERIN");
+		LotUtils.updateLot(lot, 1, "OPERIN");
 
 		if (!"START".equals(order.getOrderStatus())) {
 			order.setOrderStatus("START");
