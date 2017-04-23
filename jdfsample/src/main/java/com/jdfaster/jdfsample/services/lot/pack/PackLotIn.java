@@ -1,9 +1,12 @@
-package com.jdfaster.jdfsample.services.lot.end;
+package com.jdfaster.jdfsample.services.lot.pack;
 
-public class EndLotIn {
+import java.util.List;
+
+public class PackLotIn {
 	private String lotId;
 	private String locCode;
 	private String operCode;
+	private List<String> lotIdList;
 
 	public String getLotId() {
 		return lotId;
@@ -29,4 +32,11 @@ public class EndLotIn {
 		this.operCode = operCode;
 	}
 
+	public List<String> getLotIdList() {
+		return lotIdList;
+	}
+
+	public void setLotIdList(List<String> lotIdList) {
+		this.lotIdList = lotIdList;
+	}
 }

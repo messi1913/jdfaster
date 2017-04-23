@@ -1,6 +1,6 @@
-package com.jdfaster.jdfsample.services.lot.instore;
+package com.jdfaster.jdfsample.services.lot.pack;
 
-public class InstoreLotOut {
+public class PackLotOut {
 	private String lotId;
 
 	public String getLotId() {

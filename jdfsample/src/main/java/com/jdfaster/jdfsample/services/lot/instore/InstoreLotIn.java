@@ -1,50 +1,40 @@
 package com.jdfaster.jdfsample.services.lot.instore;
 
 public class InstoreLotIn {
+	private String locCode;
 	private String lotId;
-	private String lotStatus;
-	private String compOrderId;
-	private String compLotId;
-	private String compMatSn;
-	private Integer compMatQty;
-	
+	private String matCode;
+	private Integer lotQty;
+
+	public String getLocCode() {
+		return locCode;
+	}
+
+	public void setLocCode(String locCode) {
+		this.locCode = locCode;
+	}
+
 	public String getLotId() {
 		return lotId;
 	}
+
 	public void setLotId(String lotId) {
 		this.lotId = lotId;
 	}
-	public String getLotStatus() {
-		return lotStatus;
+
+	public String getMatCode() {
+		return matCode;
 	}
-	public void setLotStatus(String lotStatus) {
-		this.lotStatus = lotStatus;
+
+	public void setMatCode(String matCode) {
+		this.matCode = matCode;
 	}
-	public String getCompOrderId() {
-		return compOrderId;
+
+	public Integer getLotQty() {
+		return lotQty;
 	}
-	public void setCompOrderId(String compOrderId) {
-		this.compOrderId = compOrderId;
+
+	public void setLotQty(Integer lotQty) {
+		this.lotQty = lotQty;
 	}
-	public String getCompLotId() {
-		return compLotId;
-	}
-	public void setCompLotId(String compLotId) {
-		this.compLotId = compLotId;
-	}
-	public String getCompMatSn() {
-		return compMatSn;
-	}
-	public void setCompMatSn(String compMatSn) {
-		this.compMatSn = compMatSn;
-	}
-	public Integer getCompMatQty() {
-		return compMatQty;
-	}
-	public void setCompMatQty(Integer compMatQty) {
-		this.compMatQty = compMatQty;
-	}
-	
-	
-	
 }

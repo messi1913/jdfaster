@@ -8,41 +8,43 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="mes_lot")
+@Table(name = "mes_lot")
 public class MesLot {
 	@Id
-	@Column (name = "lotId", nullable = false, length = 100)
+	@Column(name = "lotId", nullable = false, length = 100)
 	private String lotId;
 	// CREATE, OPERIN, OPERSTART, OPEREND, SHIP, STORE, USE, DELETE
-	@Column (name = "lotStatus", length = 50)
+	@Column(name = "lotStatus", length = 50)
 	private String lotStatus;
-	@Column (name = "matCode", length = 50)
+	@Column(name = "matCode", length = 50)
 	private String matCode;
-	@Column (name = "lotQty", length = 100)
+	@Column(name = "lotQty", length = 100)
 	private Integer lotQty;
-	@Column (name = "locCode", length = 50)
+	@Column(name = "locCode", length = 50)
 	private String locCode;
-	@Column (name = "flowCode", length = 50)
+	@Column(name = "flowCode", length = 50)
 	private String flowCode;
-	@Column (name = "operCode", length = 50)
+	@Column(name = "operCode", length = 50)
 	private String operCode;
-	@Column (name = "operInTime")
+	@Column(name = "operInTime")
 	private Date operInTime;
-	@Column (name = "operStartTime")
+	@Column(name = "operStartTime")
 	private Date operStartTime;
-	@Column (name = "operEndTime")
+	@Column(name = "operEndTime")
 	private Date operEndTime;
-	@Column (name = "orderId", length = 100)
+	@Column(name = "orderId", length = 100)
 	private String orderId;
-	@Column (name = "compOrderId", length = 100)
+	@Column(name = "compOrderId", length = 100)
 	private String compOrderId;
-	@Column (name = "createUserId", length = 100)
+	@Column(name = "packedFlag", length = 1)
+	private String packedFlag;
+	@Column(name = "createUserId", length = 100)
 	private String createUserId;
-	@Column (name = "createTime")
+	@Column(name = "createTime")
 	private Date createTime;
-	@Column (name = "updateUserId", length = 100)
+	@Column(name = "updateUserId", length = 100)
 	private String updateUserId;
-	@Column (name = "updateTime")
+	@Column(name = "updateTime")
 	private Date updateTime;
 
 	public String getLotId() {
@@ -135,6 +137,14 @@ public class MesLot {
 
 	public String getCompOrderId() {
 		return compOrderId;
+	}
+
+	public String getPackedFlag() {
+		return packedFlag;
+	}
+
+	public void setPackedFlag(String packedFlag) {
+		this.packedFlag = packedFlag;
 	}
 
 	public void setCompOrderId(String compOrderId) {
