@@ -3,6 +3,10 @@ package com.jdfaster.jdfsample.services.test.scen01;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.jdfaster.jdfsample.services.lot.MesLot;
+import com.jdfaster.jdfsample.services.lot.MesLotRepository;
 import com.jdfaster.jdfsample.services.lot.create.CreateLot;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotIn;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotOut;
@@ -17,6 +21,10 @@ import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class TestScen01 {
+	
+	@Autowired
+	MesLotRepository mesLotRep;
+	
 	public TestScen01Out scen01(TestScen01In input) throws Exception {
 		String lineCode = MesTestUtils.getLineCode();
 		try {
@@ -65,10 +73,10 @@ public class TestScen01 {
 
 		// 3. Pack
 		{
-			// TODO check pack lot size
 			int lotSize;
 			{
-				lotSize = 10;
+				List<MesLot> lotList = mesLotRep.findByOrderIdAndOperCodeAndPLotId(order.getOrderId(), "O-PACK", "N");
+				lotSize = lotList.isEmpty() ? 0 : lotList.size();
 			}
 
 			if (lotSize >= 10) {
@@ -79,7 +87,7 @@ public class TestScen01 {
 
 				PackLotIn reqIn = new PackLotIn();
 				reqIn.setLocCode(order.getLocCode());
-				reqIn.setOperCode("O-TEST");
+				reqIn.setOperCode("O-PACK");
 				reqIn.setLotIdList(lotIdList);
 				SvcUtils.getBean(PackLot.class).pack(reqIn);
 			}
@@ -90,7 +98,8 @@ public class TestScen01 {
 			// TODO check ship lot size
 			int lotSize;
 			{
-				lotSize = 100;
+				List<MesLot> lotList = mesLotRep.findByOrderIdAndOperCodeAndPLotId(order.getOrderId(), "O-SHIP", "N");
+				lotSize = lotList.isEmpty() ? 0 : lotList.size();
 			}
 
 			if (lotSize >= 100) {
@@ -101,7 +110,7 @@ public class TestScen01 {
 
 				ShipLotIn reqIn = new ShipLotIn();
 				reqIn.setLocCode(order.getLocCode());
-				reqIn.setOperCode("O-TEST");
+				reqIn.setOperCode("O-SHIP");
 				reqIn.setLotIdList(lotIdList);
 				SvcUtils.getBean(ShipLot.class).ship(reqIn);
 			}
