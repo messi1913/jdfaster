@@ -32,6 +32,7 @@ public class MesLotComp {
 	private String updateUserId;
 	@Column (name = "updateTime")
 	private Date updateTime;
+	
 	public String getLotId() {
 		return lotId;
 	}

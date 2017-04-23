@@ -30,7 +30,7 @@ public class TestScen01 {
 	}
 
 	private void test(String lineCode) throws Exception {
-		MesOrder order = MesTestUtils.getOrder(lineCode);
+		MesOrder order = MesTestUtils.getOrder(getClass().getSimpleName(), lineCode, "M-GS8");
 
 		String lotId;
 

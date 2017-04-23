@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="mes_flow_oper")
+@Table(name ="mes_loc")
 public class MesLoc {
 	@Id
 	@Column (name = "locCode", nullable = false, length = 100)
