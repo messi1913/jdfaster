@@ -13,8 +13,12 @@ public class MesTestStatus {
 	@Id
 	@Column(name = "test_name", nullable = false, length = 100)
 	private String testName;
+	@Id
 	@Column(name = "locCode", length = 50)
 	private String locCode;
+	@Id
+	@Column(name = "matCode", length = 50)
+	private String matCode;
 	@Column(name = "orderId", length = 100)
 	private String orderId;
 	@Column(name = "leftQty", length = 10)
@@ -42,6 +46,14 @@ public class MesTestStatus {
 
 	public void setLocCode(String locCode) {
 		this.locCode = locCode;
+	}
+
+	public String getMatCode() {
+		return matCode;
+	}
+
+	public void setMatCode(String matCode) {
+		this.matCode = matCode;
 	}
 
 	public String getOrderId() {
