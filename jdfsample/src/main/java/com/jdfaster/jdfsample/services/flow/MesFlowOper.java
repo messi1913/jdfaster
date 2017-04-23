@@ -19,7 +19,7 @@ public class MesFlowOper {
 	@Id
 	@Column (name = "operCode", nullable = false, length = 50)
 	private String operCode;
-	@Column (name = "seqNo", length = 100)
+	@Column (name = "seqNo", length = 5)
 	private Integer seqNo;
 	@Column (name = "createUserId", length = 100)
 	private String createUserId;

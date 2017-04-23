@@ -1,4 +1,4 @@
-package com.jdfaster.jdfsample.services.mat;
+package com.jdfaster.jdfsample.services.test;
 
 import java.util.Date;
 
@@ -8,17 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mes_mat")
-public class MesMat {
+@Table(name = "mes_test_status")
+public class MesTestStatus {
 	@Id
-	@Column(name = "matCode", nullable = false, length = 50)
-	private String matCode;
-	@Column(name = "matName", length = 500)
-	private String matName;
-	@Column(name = "matType", length = 50)
-	private String matType;
-	@Column(name = "flowCode", length = 50)
-	private String flowCode;
+	@Column(name = "test_name", nullable = false, length = 100)
+	private String testName;
+	@Column(name = "locCode", length = 50)
+	private String locCode;
+	@Column(name = "orderId", length = 100)
+	private String orderId;
+	@Column(name = "leftQty", length = 10)
+	private Integer leftQty;
 	@Column(name = "createUserId", length = 100)
 	private String createUserId;
 	@Column(name = "createTime")
@@ -28,36 +28,36 @@ public class MesMat {
 	@Column(name = "updateTime")
 	private Date updateTime;
 
-	public String getMatCode() {
-		return matCode;
+	public String getTestName() {
+		return testName;
 	}
 
-	public void setMatCode(String matCode) {
-		this.matCode = matCode;
+	public void setTestName(String testName) {
+		this.testName = testName;
 	}
 
-	public String getMatName() {
-		return matName;
+	public String getLocCode() {
+		return locCode;
 	}
 
-	public void setMatName(String matName) {
-		this.matName = matName;
+	public void setLocCode(String locCode) {
+		this.locCode = locCode;
 	}
 
-	public String getMatType() {
-		return matType;
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setMatType(String matType) {
-		this.matType = matType;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
-	public String getFlowCode() {
-		return flowCode;
+	public Integer getLeftQty() {
+		return leftQty;
 	}
 
-	public void setFlowCode(String flowCode) {
-		this.flowCode = flowCode;
+	public void setLeftQty(Integer leftQty) {
+		this.leftQty = leftQty;
 	}
 
 	public String getCreateUserId() {

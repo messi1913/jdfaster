@@ -24,9 +24,9 @@ public class MesOrder {
 	private String locCode;
 	@Column (name = "orderQty", length = 100)
 	private Integer orderQty;
-	@Column (name = "inputQty", length = 100)
+	@Column (name = "inputQty", length = 10)
 	private Integer inputQty;
-	@Column (name = "outputQty", length = 100)
+	@Column (name = "outputQty", length = 10)
 	private Integer outputQty;
 	@Column (name = "startTime")
 	private Date startTime;
