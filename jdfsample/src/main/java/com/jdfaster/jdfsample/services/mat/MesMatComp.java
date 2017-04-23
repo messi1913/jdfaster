@@ -19,7 +19,7 @@ public class MesMatComp {
 	private String matCode;
 	@Column (name = "compMatCode", length = 50)
 	private String compMatCode;
-	@Column (name = "compMatQty", length = 100)
+	@Column (name = "compMatQty", length = 10)
 	private Integer compMatQty;
 	@Column (name = "operCode", length = 100)
 	private String operCode;

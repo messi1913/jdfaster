@@ -22,7 +22,7 @@ public class MesLotComp {
 	@Id
 	@Column (name = "compMatSn", nullable = false, length = 100)
 	private String compMatSn;
-	@Column (name = "compMatQty", length = 100)
+	@Column (name = "compMatQty", length = 10)
 	private Integer compMatQty;
 	@Column (name = "createUserId", length = 100)
 	private String createUserId;

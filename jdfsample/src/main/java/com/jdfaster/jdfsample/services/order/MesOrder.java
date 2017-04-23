@@ -22,7 +22,7 @@ public class MesOrder {
 	private String matCode;
 	@Column (name = "locCode", length = 50)
 	private String locCode;
-	@Column (name = "orderQty", length = 100)
+	@Column (name = "orderQty", length = 10)
 	private Integer orderQty;
 	@Column (name = "inputQty", length = 10)
 	private Integer inputQty;

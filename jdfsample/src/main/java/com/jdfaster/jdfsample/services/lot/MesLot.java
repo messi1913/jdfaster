@@ -18,7 +18,7 @@ public class MesLot {
 	private String lotStatus;
 	@Column(name = "matCode", length = 50)
 	private String matCode;
-	@Column(name = "lotQty", length = 100)
+	@Column(name = "lotQty", length = 10)
 	private Integer lotQty;
 	@Column(name = "locCode", length = 50)
 	private String locCode;

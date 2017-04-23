@@ -17,11 +17,11 @@ public class MesFlow {
 	private String flowName;
 	@Column (name = "createUserId", length = 100)
 	private String createUserId;
-	@Column (name = "createTime", length = 16)
+	@Column (name = "createTime")
 	private Date createTime;
 	@Column (name = "updateUserId", length = 100)
 	private String updateUserId;
-	@Column (name = "updateTime", length = 16)
+	@Column (name = "updateTime")
 	private Date updateTime;
 
 	public String getFlowCode() {

@@ -18,7 +18,7 @@ public class MesLotHist {
 	@Column (name = "lotId", nullable = false, length = 100)
 	private String lotId;
 	@Id
-	@Column (name = "seqNo", nullable = false, length = 100)
+	@Column (name = "seqNo", nullable = false, length = 10)
 	private Integer seqNo;
 	@Column (name = "tranCode", length = 50)
 	private String tranCode;
@@ -26,7 +26,7 @@ public class MesLotHist {
 	private String lotStatus;
 	@Column (name = "matCode", length = 50)
 	private String matCode;
-	@Column (name = "lotQty", length = 100)
+	@Column (name = "lotQty", length = 10)
 	private Integer lotQty;
 	@Column (name = "locCode", length = 50)
 	private String locCode;
