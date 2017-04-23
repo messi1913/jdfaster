@@ -36,8 +36,8 @@ public class MesLot {
 	private String orderId;
 	@Column(name = "compOrderId", length = 100)
 	private String compOrderId;
-	@Column(name = "packedFlag", length = 1)
-	private String packedFlag;
+	@Column(name = "pLotId", length = 100)
+	private String pLotId;
 	@Column(name = "createUserId", length = 100)
 	private String createUserId;
 	@Column(name = "createTime")
@@ -139,12 +139,12 @@ public class MesLot {
 		return compOrderId;
 	}
 
-	public String getPackedFlag() {
-		return packedFlag;
+	public String getpLotId() {
+		return pLotId;
 	}
 
-	public void setPackedFlag(String packedFlag) {
-		this.packedFlag = packedFlag;
+	public void setpLotId(String pLotId) {
+		this.pLotId = pLotId;
 	}
 
 	public void setCompOrderId(String compOrderId) {
