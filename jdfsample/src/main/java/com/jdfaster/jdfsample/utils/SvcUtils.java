@@ -3,13 +3,8 @@ package com.jdfaster.jdfsample.utils;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.jdfaster.jdfsample.controller.CommonController;
-
-import net.sf.common.util.BeanUtils;
 
 public class SvcUtils {
 
@@ -19,7 +14,7 @@ public class SvcUtils {
 	}
 
 	public static <T> T getBean(Class<T> type) throws Exception {
-		return BeanUtils.getInstance("jdfsample").get(type);
+		return CommonController.getApplicationContext().getBean(type);
 	}
 
 	public static boolean isEmpty(Object value) throws Exception {
@@ -45,18 +40,18 @@ public class SvcUtils {
 			throw new Exception("Required param: " + paramName);
 	}
 
-	public static <T> T toInVo(HttpServletRequest request) throws Exception {
-		// TODO SvcUtils.toInvo
-		return null;
-	}
-
-	private static final ObjectMapper om;
-	static {
-		om = new ObjectMapper();
-	}
-
-	public static String toOutStr(Object output) throws Exception {
-		return om.writeValueAsString(output);
-	}
+	// public static <T> T toInVo(HttpServletRequest request) throws Exception {
+	// // TODO SvcUtils.toInvo
+	// return null;
+	// }
+	//
+	// private static final ObjectMapper om;
+	// static {
+	// om = new ObjectMapper();
+	// }
+	//
+	// public static String toOutStr(Object output) throws Exception {
+	// return om.writeValueAsString(output);
+	// }
 
 }
