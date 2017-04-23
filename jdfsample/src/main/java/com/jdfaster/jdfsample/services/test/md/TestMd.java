@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.jdfaster.jdfsample.services.flow.MesFlow;
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.loc.MesLoc;
@@ -15,12 +13,10 @@ import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.services.oper.MesOper;
 import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 
-
 public class TestMd {
-	
+
 	public TestMdOut md(TestMdIn input, EntityManager em) throws Exception {
-		
-		
+
 		String flowCode = "F-MP001";
 
 		// Flow
@@ -29,8 +25,6 @@ public class TestMd {
 			flow.setFlowCode(flowCode);
 			flow.setFlowName("Mobile Phone Flow");
 			em.persist(flow);
-			
-			// TODO insert flow
 		}
 
 		// Oper
@@ -120,8 +114,6 @@ public class TestMd {
 				stores.add(store);
 				em.persist(store);
 			}
-
-			// TODO insert stores
 		}
 
 		// Line
@@ -133,13 +125,9 @@ public class TestMd {
 				line.setLocCode(lineCode);
 				line.setLocName("Line " + lineCode.substring(2));
 				line.setLocType("LINE");
-
 				lines.add(line);
-				
 				em.persist(line);
 			}
-
-			// TODO insert lines
 		}
 
 		String matCode = "M-GS8";
@@ -152,7 +140,6 @@ public class TestMd {
 			prod.setMatType("FG");
 			prod.setFlowCode(flowCode);
 			em.persist(prod);
-			// TODO insert prod
 		}
 
 		// Component
@@ -224,8 +211,6 @@ public class TestMd {
 				matComps.add(matComp);
 				em.persist(matComp);
 			}
-
-			// TODO insert comps and matComps
 		}
 
 		TestMdOut output = new TestMdOut();
