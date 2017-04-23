@@ -25,7 +25,7 @@ import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotOut;
 
 @RestController
-@RequestMapping("/services/order/")
+@RequestMapping("/services/lot/")
 public class LotServices {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/instore/")
