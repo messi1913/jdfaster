@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.test;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_test_status")
-public class MesTestStatus {
+public class MesTestStatus implements Serializable {
 	@Id
 	@Column(name = "test_name", nullable = false, length = 100)
 	private String testName;

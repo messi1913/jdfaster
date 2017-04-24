@@ -12,11 +12,15 @@ import com.jdfaster.jdfsample.services.mat.MesMat;
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.services.oper.MesOper;
 import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
+import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class TestMd {
 
-	public TestMdOut md(TestMdIn input, EntityManager em) throws Exception {
+	public TestMdOut md(TestMdIn input) throws Exception {
 
+		EntityManager em = SvcUtils.getEm();
+		
+		
 		String flowCode = "F-MP001";
 
 		// Flow
