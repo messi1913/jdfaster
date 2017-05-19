@@ -22,7 +22,6 @@ public class IdGenImpl implements IdGen {
 
 	@Override
 	public String genId(String idRuleCode, Map<String, String> params) throws Exception {
-		// TODO Auto-generated method stub
 		return UUID.randomUUID().toString();
 	}
 

@@ -19,7 +19,6 @@ public class ServiceAspect {
 			Object proceed = jointPoint.proceed(jointPoint.getArgs());
 			LOGGER.debug("do sth after invoke method by AOP : ");
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

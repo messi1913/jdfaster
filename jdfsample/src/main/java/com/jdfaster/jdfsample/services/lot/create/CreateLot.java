@@ -3,10 +3,13 @@ package com.jdfaster.jdfsample.services.lot.create;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
+
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.utils.LotUtils;
 import com.jdfaster.jdfsample.services.mat.MesMat;
+import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
@@ -16,16 +19,29 @@ public class CreateLot {
 		SvcUtils.checkNotEmpty("operCode", input.getOperCode());
 		SvcUtils.checkNotEmpty("orderId", input.getOrderId());
 
-		// TODO
-		MesOrder order = null;
+		EntityManager em = SvcUtils.getEm();
+		
+		MesOrder order = new MesOrder();
+		order.setOrderId(input.getOrderId());
+		order = em.find(MesOrder.class, order);
+		
 		if ("END".equals(order.getOrderStatus()))
 			throw new Exception("This Order Already Ended: " + input.getOrderId());
 
-		// TODO
-		MesMat prod = null;
+		SvcUtils.checkNotEmpty("matCode", order.getMatCode());
+		MesMat prod = new MesMat();
+		prod.setMatCode(order.getMatCode());
+		prod = em.find(MesMat.class, prod);
 
-		// TODO
-		MesFlowOper oper = null;
+		MesMatComp prodComp = new MesMatComp();
+		prodComp.setMatCode(order.getMatCode());
+		prodComp = em.find(MesMatComp.class, prodComp);
+		SvcUtils.checkNotEmpty("flowCode", prod.getFlowCode());
+		SvcUtils.checkNotEmpty("operCode", prodComp.getOperCode());
+		MesFlowOper oper = new MesFlowOper();
+		oper.setFlowCode(prod.getFlowCode());
+		oper.setOperCode(prodComp.getOperCode());
+		oper = em.find(MesFlowOper.class, oper);
 		if (!input.getOperCode().equals(oper.getOperCode()))
 			throw new Exception("This Oper is Not the Starting Oper: " + input.getOperCode());
 
@@ -45,8 +61,8 @@ public class CreateLot {
 		lot.setOperCode(input.getOperCode());
 		lot.setOperInTime(new Date());
 		lot.setpLotId(" ");
-		// TODO
-		// em.persist(lot);
+
+		em.persist(lot);
 		LotUtils.updateLot(lot, 1, "OPERIN");
 
 		if (!"START".equals(order.getOrderStatus())) {
@@ -55,8 +71,8 @@ public class CreateLot {
 				order.setStartTime(new Date());
 		}
 		order.setInputQty(order.getInputQty() + 1);
-		// TODO
-		// em.persist(order);
+	
+		em.persist(order);
 
 		CreateLotOut output = new CreateLotOut();
 		return output;

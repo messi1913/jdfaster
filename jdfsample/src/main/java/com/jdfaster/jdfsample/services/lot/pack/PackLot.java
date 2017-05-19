@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
+
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
@@ -12,12 +14,16 @@ public class PackLot {
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());
 		SvcUtils.checkNotEmpty("operCode", input.getOperCode());
 		SvcUtils.checkNotEmpty("lotIdList", input.getLotIdList());
+		
+		EntityManager em = SvcUtils.getEm();
 
 		int totalQty = 0;
 		List<MesLot> lotList = new ArrayList<MesLot>(input.getLotIdList().size());
 		for (String lotId : input.getLotIdList()) {
 			// TODO
-			MesLot lot = null;
+			MesLot lot = new MesLot();
+			lot.setLotId(lotId);
+			lot = em.find(MesLot.class, lot);
 			totalQty += lot.getLotQty();
 			lotList.add(lot);
 		}

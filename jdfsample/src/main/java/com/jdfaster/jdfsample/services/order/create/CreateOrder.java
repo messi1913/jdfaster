@@ -2,6 +2,8 @@ package com.jdfaster.jdfsample.services.order.create;
 
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
+
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
@@ -10,13 +12,17 @@ public class CreateOrder {
 		SvcUtils.checkNotEmpty("matCode", input.getMatCode());
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());
 		SvcUtils.checkNotEmpty("orderQty", input.getOrderQty());
+		
+		EntityManager em = SvcUtils.getEm();
 
 		if (SvcUtils.isEmpty(input.getOrderId())) {
 			input.setOrderId(UUID.randomUUID().toString());
 		}
 
-		// TODO
-		MesOrder order = null;
+		MesOrder order = new MesOrder();
+		order.setOrderId(input.getOrderId());
+		order  = em.find(MesOrder.class, order);
+		
 		if (order != null)
 			throw new Exception("This Order Already Exist");
 
@@ -29,8 +35,7 @@ public class CreateOrder {
 		order.setOrderQty(input.getOrderQty());
 		order.setInputQty(0);
 		order.setOutputQty(0);
-		// TODO
-		// em.persist(order);
+		em.persist(order);
 
 		CreateOrderOut output = new CreateOrderOut();
 		return output;

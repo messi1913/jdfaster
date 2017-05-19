@@ -2,11 +2,13 @@ package com.jdfaster.jdfsample.services.lot.utils;
 
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.MesLotHist;
+import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class LotUtils {
-
 	public static void endLot(MesLot lot, int histSeqNo, String tranCode) throws Exception {
 		if (!"OPERIN".equals(lot.getLotStatus()))
 			throw new Exception("This Lot Status is Not OPERIN: " + lot.getLotStatus());
@@ -18,6 +20,7 @@ public class LotUtils {
 	}
 
 	public static void updateLot(MesLot lot, int histSeqNo, String tranCode) throws Exception {
+		EntityManager em = SvcUtils.getEm();
 		MesLotHist hist = new MesLotHist();
 		hist.setLotId(lot.getLotId());
 		hist.setSeqNo(histSeqNo);
@@ -34,8 +37,8 @@ public class LotUtils {
 		hist.setOrderId(lot.getOrderId());
 		hist.setCompOrderId(lot.getCompOrderId());
 		// TODO
-		// em.merge(lot);
-		// em.persist(hist);
+		 em.merge(lot);
+		 em.persist(hist);
 	}
 
 }
