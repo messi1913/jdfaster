@@ -67,7 +67,7 @@ public class TestScen01 {
 
 		// 3. Pack
 		{
-			int lotSize;
+			long lotSize;
 			{
 				GetLotSizeIn reqIn = new GetLotSizeIn();
 				reqIn.setOrderId(order.getOrderId());
@@ -93,7 +93,7 @@ public class TestScen01 {
 
 		// 4. Ship
 		{
-			int lotSize;
+			long lotSize;
 			{
 				GetLotSizeIn reqIn = new GetLotSizeIn();
 				reqIn.setOrderId(order.getOrderId());

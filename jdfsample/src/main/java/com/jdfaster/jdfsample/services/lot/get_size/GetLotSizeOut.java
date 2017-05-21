@@ -1,13 +1,13 @@
 package com.jdfaster.jdfsample.services.lot.get_size;
 
 public class GetLotSizeOut {
-	private int size;
+	private long size;
 
-	public int getSize() {
+	public long getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setSize(long size) {
 		this.size = size;
 	}
 }
