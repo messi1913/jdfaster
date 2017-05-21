@@ -3,8 +3,6 @@ package com.jdfaster.jdfsample.services.test.scen01;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Lists;
-
 import com.jdfaster.jdfsample.services.lot.LotServices;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotIn;
@@ -75,7 +73,7 @@ public class TestScen01 {
 					GetLotListIn reqIn = new GetLotListIn();
 					reqIn.setOrderId(order.getOrderId());
 					reqIn.setOperCode("O-PACK");
-					reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
+					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART", ""));
 					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
 					list = reqOut.getList();
 				}
@@ -104,7 +102,7 @@ public class TestScen01 {
 					GetLotListIn reqIn = new GetLotListIn();
 					reqIn.setOrderId(order.getOrderId());
 					reqIn.setOperCode("O-PACK");
-					reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
+					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART", ""));
 					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
 					list = reqOut.getList();
 				}
@@ -123,5 +121,15 @@ public class TestScen01 {
 				SvcUtils.getBean(LotServices.class).ship(reqIn);
 			}
 		}
+	}
+
+	@SafeVarargs
+	public static <T> ArrayList<T> newArrayList(T... elements) {
+		if (elements == null) {
+			return null;
+		}
+		ArrayList<T> list = new ArrayList<T>();
+		java.util.Collections.addAll(list, elements);
+		return list;
 	}
 }

@@ -27,7 +27,7 @@ public class GetMatCompList {
 				where.add(cb.equal(root.get("matCode"), input.getMatCode()));
 			if (input.getOperCode() != null && !input.getOperCode().trim().isEmpty())
 				where.add(cb.equal(root.get("operCode"), input.getOperCode()));
-			cq.where(cb.and(where.toArray(new Predicate[where.size()])));
+			cq.where(where.toArray(new Predicate[where.size()]));
 			cq.orderBy(cb.asc(root.get("matCode")));
 			TypedQuery<MesMatComp> query = em.createQuery(cq);
 			query.setFirstResult(0);

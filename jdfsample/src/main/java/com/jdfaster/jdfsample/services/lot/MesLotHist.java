@@ -6,13 +6,12 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_lot_hist")
-@IdClass(LotHistCompositeKey.class)
+//@IdClass(LotHistCompositeKey.class)
 public class MesLotHist implements Serializable {
 	@Id
 	@Column(name = "lotId", nullable = false, length = 100)
@@ -198,7 +197,7 @@ public class MesLotHist implements Serializable {
 	}
 }
 
-class LotHistCompositeKey implements Serializable {
-	private String lotId;
-	private Integer seqNo;
-}
+//class LotHistCompositeKey implements Serializable {
+//	private String lotId;
+//	private Integer seqNo;
+//}

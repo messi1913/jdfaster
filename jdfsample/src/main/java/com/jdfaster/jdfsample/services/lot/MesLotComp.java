@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_lot_comp")
-@IdClass(LotCompositeKey.class)
+//@IdClass(LotCompositeKey.class)
 public class MesLotComp implements Serializable {
 	@Id
 	@Column(name = "lotId", nullable = false, length = 100)
@@ -100,8 +100,8 @@ public class MesLotComp implements Serializable {
 
 }
 
-class LotCompositeKey implements Serializable {
-	private String lotId;
-	private String compLotId;
-	private String compMatSn;
-}
+//class LotCompositeKey implements Serializable {
+//	private String lotId;
+//	private String compLotId;
+//	private String compMatSn;
+//}

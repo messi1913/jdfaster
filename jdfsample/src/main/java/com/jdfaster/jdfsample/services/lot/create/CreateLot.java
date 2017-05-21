@@ -29,16 +29,16 @@ public class CreateLot {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		MesOrder order = new MesOrder();
-		order.setOrderId(input.getOrderId());
-		order = em.find(MesOrder.class, order);
+//		order.setOrderId(input.getOrderId());
+		order = em.find(MesOrder.class, input.getOrderId());
 
 		if ("END".equals(order.getOrderStatus()))
 			throw new Exception("This Order Already Ended: " + input.getOrderId());
 
 		SvcUtils.checkNotEmpty("matCode", order.getMatCode());
 		MesMat prod = new MesMat();
-		prod.setMatCode(order.getMatCode());
-		prod = em.find(MesMat.class, prod);
+//		prod.setMatCode(order.getMatCode());
+		prod = em.find(MesMat.class, order.getMatCode());
 
 		SvcUtils.checkNotEmpty("flowCode", prod.getFlowCode());
 		{
@@ -87,6 +87,8 @@ public class CreateLot {
 		em.persist(order);
 
 		CreateLotOut output = new CreateLotOut();
+		
+		output.setLotId(input.getLotId());
 		return output;
 	}
 }

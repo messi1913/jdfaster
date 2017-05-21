@@ -6,13 +6,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_flow_oper")
-@IdClass(FlowCompositeKey.class)
 public class MesFlowOper implements Serializable {
 	@Id
 	@Column(name = "flowCode", nullable = false, length = 50)
@@ -89,7 +87,7 @@ public class MesFlowOper implements Serializable {
 
 }
 
-class FlowCompositeKey implements Serializable {
-	private String flowCode;
-	private String operCode;
-}
+//class FlowCompositeKey implements Serializable {
+//	private String flowCode;
+//	private String operCode;
+//}

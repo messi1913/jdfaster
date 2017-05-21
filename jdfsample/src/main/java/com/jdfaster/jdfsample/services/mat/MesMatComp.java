@@ -6,17 +6,17 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_mat_comp")
-@IdClass(MatCompositeKey.class)
+//@IdClass(MatCompositeKey.class)
 public class MesMatComp implements Serializable {
 	@Id
 	@Column(name = "matCode", nullable = false, length = 50)
 	private String matCode;
+	@Id
 	@Column(name = "compMatCode", length = 50)
 	private String compMatCode;
 	@Column(name = "compMatQty", length = 10)
@@ -98,7 +98,7 @@ public class MesMatComp implements Serializable {
 
 }
 
-class MatCompositeKey implements Serializable {
-	private String matCode;
-	private String compMatCode;
-}
+//class MatCompositeKey implements Serializable {
+//	private String matCode;
+//	private String compMatCode;
+//}
