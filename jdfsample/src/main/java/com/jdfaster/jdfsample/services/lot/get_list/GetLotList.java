@@ -1,4 +1,4 @@
-package com.jdfaster.jdfsample.services.lot.get_size;
+package com.jdfaster.jdfsample.services.lot.get_list;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +13,15 @@ import javax.persistence.criteria.Root;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-public class GetLotSize {
-	public GetLotSizeOut getSize(GetLotSizeIn input) throws Exception {
+public class GetLotList {
+	public GetLotListOut getList(GetLotListIn input) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
-		long size;
+		List<MesLot> list;
 		{
-			CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+			CriteriaQuery<MesLot> cq = cb.createQuery(MesLot.class);
 			Root<MesLot> root = cq.from(MesLot.class);
-			cq.select(cb.count(root));
 			List<Predicate> where = new ArrayList<Predicate>();
 			if (input.getOrderId() != null && !input.getOrderId().trim().isEmpty())
 				where.add(cb.equal(root.get("orderId"), input.getOrderId()));
@@ -33,12 +32,13 @@ public class GetLotSize {
 			if (input.getLotStatusIn() != null && !input.getLotStatusIn().isEmpty())
 				where.add(root.get("lotStatus").in(input.getLotStatusIn()));
 			cq.where(where.toArray(new Predicate[where.size()]));
-			TypedQuery<Long> query = em.createQuery(cq);
-			size = query.getSingleResult();
+			cq.orderBy(cb.asc(root.get("operEndTime")));
+			TypedQuery<MesLot> query = em.createQuery(cq);
+			list = query.getResultList();
 		}
 
-		GetLotSizeOut output = new GetLotSizeOut();
-		output.setSize(size);
+		GetLotListOut output = new GetLotListOut();
+		output.setList(list);
 		return output;
 	}
 }

@@ -6,11 +6,12 @@ import java.util.List;
 import org.assertj.core.util.Lists;
 
 import com.jdfaster.jdfsample.services.lot.LotServices;
+import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotIn;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotOut;
 import com.jdfaster.jdfsample.services.lot.end.EndLotIn;
-import com.jdfaster.jdfsample.services.lot.get_size.GetLotSizeIn;
-import com.jdfaster.jdfsample.services.lot.get_size.GetLotSizeOut;
+import com.jdfaster.jdfsample.services.lot.get_list.GetLotListIn;
+import com.jdfaster.jdfsample.services.lot.get_list.GetLotListOut;
 import com.jdfaster.jdfsample.services.lot.pack.PackLotIn;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
 import com.jdfaster.jdfsample.services.order.MesOrder;
@@ -67,22 +68,25 @@ public class TestScen01 {
 
 		// 3. Pack
 		{
-			long lotSize;
+			List<String> lotIdList = new ArrayList<String>();
 			{
-				GetLotSizeIn reqIn = new GetLotSizeIn();
-				reqIn.setOrderId(order.getOrderId());
-				reqIn.setOperCode("O-PACK");
-				reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
-				GetLotSizeOut reqOut = SvcUtils.getBean(LotServices.class).getSize(reqIn);
-				lotSize = reqOut.getSize();
-			}
-
-			if (lotSize >= 10) {
-				List<String> lotIdList;
+				List<MesLot> list;
 				{
-					lotIdList = new ArrayList<String>();
+					GetLotListIn reqIn = new GetLotListIn();
+					reqIn.setOrderId(order.getOrderId());
+					reqIn.setOperCode("O-PACK");
+					reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
+					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
+					list = reqOut.getList();
 				}
 
+				if (list.size() >= 10) {
+					for (int i = 0; i < 10; i++)
+						lotIdList.add(list.get(i).getLotId());
+				}
+			}
+
+			if (!lotIdList.isEmpty()) {
 				PackLotIn reqIn = new PackLotIn();
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-PACK");
@@ -93,22 +97,25 @@ public class TestScen01 {
 
 		// 4. Ship
 		{
-			long lotSize;
+			List<String> lotIdList = new ArrayList<String>();
 			{
-				GetLotSizeIn reqIn = new GetLotSizeIn();
-				reqIn.setOrderId(order.getOrderId());
-				reqIn.setOperCode("O-SHIP");
-				reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
-				GetLotSizeOut reqOut = SvcUtils.getBean(LotServices.class).getSize(reqIn);
-				lotSize = reqOut.getSize();
-			}
-
-			if (lotSize >= 100) {
-				List<String> lotIdList;
+				List<MesLot> list;
 				{
-					lotIdList = new ArrayList<String>();
+					GetLotListIn reqIn = new GetLotListIn();
+					reqIn.setOrderId(order.getOrderId());
+					reqIn.setOperCode("O-PACK");
+					reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
+					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
+					list = reqOut.getList();
 				}
 
+				if (list.size() >= 10) {
+					for (int i = 0; i < 10; i++)
+						lotIdList.add(list.get(i).getLotId());
+				}
+			}
+
+			if (!lotIdList.isEmpty()) {
 				ShipLotIn reqIn = new ShipLotIn();
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-SHIP");
