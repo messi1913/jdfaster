@@ -73,7 +73,7 @@ public class TestScen01 {
 					GetLotListIn reqIn = new GetLotListIn();
 					reqIn.setOrderId(order.getOrderId());
 					reqIn.setOperCode("O-PACK");
-					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART", ""));
+					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART"));
 					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
 					list = reqOut.getList();
 				}
@@ -102,7 +102,7 @@ public class TestScen01 {
 					GetLotListIn reqIn = new GetLotListIn();
 					reqIn.setOrderId(order.getOrderId());
 					reqIn.setOperCode("O-PACK");
-					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART", ""));
+					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART"));
 					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
 					list = reqOut.getList();
 				}
