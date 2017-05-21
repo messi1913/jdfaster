@@ -78,7 +78,7 @@ public class MesTestUtils {
 		{
 			GetMatCompListIn reqIn = new GetMatCompListIn();
 			reqIn.setMatCode(matCode);
-			GetMatCompListOut reqOut = SvcUtils.getBean(MatServices.class).viewMatCompList(reqIn);
+			GetMatCompListOut reqOut = SvcUtils.getBean(MatServices.class).getMatCompList(reqIn);
 			compList = reqOut.getList();
 		}
 

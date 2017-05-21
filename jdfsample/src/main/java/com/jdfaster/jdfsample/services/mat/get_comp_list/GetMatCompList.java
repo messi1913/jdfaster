@@ -14,7 +14,7 @@ import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class GetMatCompList {
-	public GetMatCompListOut viewMatCompList(GetMatCompListIn input) throws Exception {
+	public GetMatCompListOut getMatCompList(GetMatCompListIn input) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
