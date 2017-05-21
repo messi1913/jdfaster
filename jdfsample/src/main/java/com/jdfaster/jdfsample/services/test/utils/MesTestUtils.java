@@ -12,8 +12,8 @@ import com.jdfaster.jdfsample.services.lot.instore.InstoreLotOut;
 import com.jdfaster.jdfsample.services.lot.send.SendLotIn;
 import com.jdfaster.jdfsample.services.mat.MatServices;
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
-import com.jdfaster.jdfsample.services.mat.view_comp_list.ViewMatCompListIn;
-import com.jdfaster.jdfsample.services.mat.view_comp_list.ViewMatCompListOut;
+import com.jdfaster.jdfsample.services.mat.get_comp_list.GetMatCompListIn;
+import com.jdfaster.jdfsample.services.mat.get_comp_list.GetMatCompListOut;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.services.order.OrderServices;
 import com.jdfaster.jdfsample.services.order.create.CreateOrderIn;
@@ -76,9 +76,9 @@ public class MesTestUtils {
 		// View Comp List
 		List<MesMatComp> compList;
 		{
-			ViewMatCompListIn reqIn = new ViewMatCompListIn();
+			GetMatCompListIn reqIn = new GetMatCompListIn();
 			reqIn.setMatCode(matCode);
-			ViewMatCompListOut reqOut = SvcUtils.getBean(MatServices.class).viewMatCompList(reqIn);
+			GetMatCompListOut reqOut = SvcUtils.getBean(MatServices.class).viewMatCompList(reqIn);
 			compList = reqOut.getList();
 		}
 

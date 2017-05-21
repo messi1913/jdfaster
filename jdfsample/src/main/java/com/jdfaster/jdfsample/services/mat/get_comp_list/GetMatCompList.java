@@ -1,4 +1,4 @@
-package com.jdfaster.jdfsample.services.mat.view_comp_list;
+package com.jdfaster.jdfsample.services.mat.get_comp_list;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ import javax.persistence.criteria.Root;
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-public class ViewMatCompList {
-	public ViewMatCompListOut viewMatCompList(ViewMatCompListIn input) throws Exception {
+public class GetMatCompList {
+	public GetMatCompListOut viewMatCompList(GetMatCompListIn input) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
@@ -33,7 +33,7 @@ public class ViewMatCompList {
 			query.setMaxResults(1);
 		}
 
-		ViewMatCompListOut output = new ViewMatCompListOut();
+		GetMatCompListOut output = new GetMatCompListOut();
 		return output;
 	}
 }

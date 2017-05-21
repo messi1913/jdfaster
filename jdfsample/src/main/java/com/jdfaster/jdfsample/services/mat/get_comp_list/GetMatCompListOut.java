@@ -1,10 +1,10 @@
-package com.jdfaster.jdfsample.services.mat.view_comp_list;
+package com.jdfaster.jdfsample.services.mat.get_comp_list;
 
 import java.util.List;
 
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
 
-public class ViewMatCompListOut {
+public class GetMatCompListOut {
 	List<MesMatComp> list;
 
 	public List<MesMatComp> getList() {

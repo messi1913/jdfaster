@@ -1,6 +1,6 @@
-package com.jdfaster.jdfsample.services.mat.view_comp_list;
+package com.jdfaster.jdfsample.services.mat.get_comp_list;
 
-public class ViewMatCompListIn {
+public class GetMatCompListIn {
 	private String matCode;
 	private String operCode;
 
