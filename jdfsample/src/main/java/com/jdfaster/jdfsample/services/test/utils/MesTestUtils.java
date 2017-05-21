@@ -23,7 +23,7 @@ import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class MesTestUtils {
 	private static int lineSize = 200;
-	private static List<String> LINES_ALL;
+	private static List<String> LINES_ALL = new ArrayList<String>();
 	private static List<String> LINES_RUNNING = new ArrayList<String>(lineSize);
 
 	static {
@@ -64,7 +64,7 @@ public class MesTestUtils {
 
 		// Create Order
 		{
-			CreateOrderIn reqIn = new CreateOrderIn();
+			CreateOrderIn reqIn = new CreateOrderIn(); 
 			reqIn.setOrderDesc(testName + " Order");
 			reqIn.setMatCode(matCode);
 			reqIn.setLocCode(lineCode);

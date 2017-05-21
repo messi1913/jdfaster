@@ -38,6 +38,7 @@ public class CreateOrder {
 		em.persist(order);
 
 		CreateOrderOut output = new CreateOrderOut();
+		output.setOrderId(input.getOrderId());
 		return output;
 	}
 }

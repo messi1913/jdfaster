@@ -25,7 +25,7 @@ public class SvcUtils {
 			return str.trim().isEmpty();
 		} else if (value instanceof Integer) {
 			Integer num = (Integer) value;
-			return num > 0;
+			return num <= 0;
 		} else if (value instanceof Collection) {
 			Collection<?> col = (Collection<?>) value;
 			return col.isEmpty();
