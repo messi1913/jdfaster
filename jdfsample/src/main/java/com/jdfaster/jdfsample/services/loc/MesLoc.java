@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.loc;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,24 +8,25 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
-@Table(name ="mes_loc")
-public class MesLoc {
+@Table(name = "mes_loc")
+public class MesLoc implements Serializable {
 	@Id
-	@Column (name = "locCode", nullable = false, length = 100)
+	@Column(name = "locCode", nullable = false, length = 100)
 	private String locCode;
-	@Column (name = "locName", length = 500)
+	@Column(name = "locName", length = 500)
 	private String locName;
 	// STORE/LINE
-	@Column (name = "locType", length = 50)
+	@Column(name = "locType", length = 50)
 	private String locType;
-	@Column (name = "createUserId", length = 100)
+	@Column(name = "createUserId", length = 100)
 	private String createUserId;
-	@Column (name = "createTime")
+	@Column(name = "createTime")
 	private Date createTime;
-	@Column (name = "updateUserId", length = 100)
+	@Column(name = "updateUserId", length = 100)
 	private String updateUserId;
-	@Column (name = "updateTime")
+	@Column(name = "updateTime")
 	private Date updateTime;
 
 	public String getLocCode() {

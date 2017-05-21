@@ -9,10 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_lot_hist")
 @IdClass(LotHistCompositeKey.class)
-public class MesLotHist {
+public class MesLotHist implements Serializable {
 	@Id
 	@Column(name = "lotId", nullable = false, length = 100)
 	private String lotId;

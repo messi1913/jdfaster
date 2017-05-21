@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.order;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,38 +8,39 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
-@Table(name ="mes_order")
-public class MesOrder {
+@Table(name = "mes_order")
+public class MesOrder implements Serializable {
 	@Id
-	@Column (name = "orderId", nullable = false, length = 100)
+	@Column(name = "orderId", nullable = false, length = 100)
 	private String orderId;
-	@Column (name = "orderDesc", length = 1000)
+	@Column(name = "orderDesc", length = 1000)
 	private String orderDesc;
 	// CREATE, START, END
-	@Column (name = "orderStatus", length = 50)
+	@Column(name = "orderStatus", length = 50)
 	private String orderStatus;
-	@Column (name = "matCode", length = 50)
+	@Column(name = "matCode", length = 50)
 	private String matCode;
-	@Column (name = "locCode", length = 50)
+	@Column(name = "locCode", length = 50)
 	private String locCode;
-	@Column (name = "orderQty", length = 10)
+	@Column(name = "orderQty", length = 10)
 	private Integer orderQty;
-	@Column (name = "inputQty", length = 10)
+	@Column(name = "inputQty", length = 10)
 	private Integer inputQty;
-	@Column (name = "outputQty", length = 10)
+	@Column(name = "outputQty", length = 10)
 	private Integer outputQty;
-	@Column (name = "startTime")
+	@Column(name = "startTime")
 	private Date startTime;
-	@Column (name = "endTime")
+	@Column(name = "endTime")
 	private Date endTime;
-	@Column (name = "createUserId", length = 100)
+	@Column(name = "createUserId", length = 100)
 	private String createUserId;
-	@Column (name = "createTime")
+	@Column(name = "createTime")
 	private Date createTime;
-	@Column (name = "updateUserId", length = 100)
+	@Column(name = "updateUserId", length = 100)
 	private String updateUserId;
-	@Column (name = "updateTime")
+	@Column(name = "updateTime")
 	private Date updateTime;
 
 	public String getOrderId() {

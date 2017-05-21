@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.mat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "mes_mat")
-public class MesMat {
+public class MesMat implements Serializable {
 	@Id
 	@Column(name = "matCode", nullable = false, length = 50)
 	private String matCode;

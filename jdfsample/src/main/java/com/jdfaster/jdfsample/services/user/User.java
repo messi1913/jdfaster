@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.user;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,23 +8,24 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
-@Table(name ="user")
-public class User {
+@Table(name = "user")
+public class User implements Serializable {
 	@Id
-	@Column (name = "userId", nullable = false, length = 100)
+	@Column(name = "userId", nullable = false, length = 100)
 	private String userId;
-	@Column (name = "userName", length = 500)
+	@Column(name = "userName", length = 500)
 	private String userName;
-	@Column (name = "password", length = 100)
+	@Column(name = "password", length = 100)
 	private String password;
-	@Column (name = "createUserId", length = 100)
+	@Column(name = "createUserId", length = 100)
 	private String createUserId;
-	@Column (name = "createTime", length = 16)
+	@Column(name = "createTime", length = 16)
 	private Date createTime;
-	@Column (name = "updateUserId", length = 100)
+	@Column(name = "updateUserId", length = 100)
 	private String updateUserId;
-	@Column (name = "updateTime", length = 16)
+	@Column(name = "updateTime", length = 16)
 	private Date updateTime;
 
 	public String getUserId() {
