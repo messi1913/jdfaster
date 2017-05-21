@@ -3,14 +3,14 @@ package com.jdfaster.jdfsample.services.test.scen01;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.assertj.core.util.Lists;
 
 import com.jdfaster.jdfsample.services.lot.LotServices;
-import com.jdfaster.jdfsample.services.lot.MesLot;
-import com.jdfaster.jdfsample.services.lot.MesLotRepository;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotIn;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotOut;
 import com.jdfaster.jdfsample.services.lot.end.EndLotIn;
+import com.jdfaster.jdfsample.services.lot.get_size.GetLotSizeIn;
+import com.jdfaster.jdfsample.services.lot.get_size.GetLotSizeOut;
 import com.jdfaster.jdfsample.services.lot.pack.PackLotIn;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
 import com.jdfaster.jdfsample.services.order.MesOrder;
@@ -18,9 +18,6 @@ import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class TestScen01 {
-
-	@Autowired
-	MesLotRepository mesLotRep;
 
 	public TestScen01Out scen01(TestScen01In input) throws Exception {
 		String lineCode = MesTestUtils.getLineCode();
@@ -72,8 +69,12 @@ public class TestScen01 {
 		{
 			int lotSize;
 			{
-				List<MesLot> lotList = mesLotRep.findByOrderIdAndOperCodeAndPLotId(order.getOrderId(), "O-PACK", "N");
-				lotSize = lotList.isEmpty() ? 0 : lotList.size();
+				GetLotSizeIn reqIn = new GetLotSizeIn();
+				reqIn.setOrderId(order.getOrderId());
+				reqIn.setOperCode("O-PACK");
+				reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
+				GetLotSizeOut reqOut = SvcUtils.getBean(LotServices.class).getSize(reqIn);
+				lotSize = reqOut.getSize();
 			}
 
 			if (lotSize >= 10) {
@@ -94,8 +95,12 @@ public class TestScen01 {
 		{
 			int lotSize;
 			{
-				List<MesLot> lotList = mesLotRep.findByOrderIdAndOperCodeAndPLotId(order.getOrderId(), "O-SHIP", "N");
-				lotSize = lotList.isEmpty() ? 0 : lotList.size();
+				GetLotSizeIn reqIn = new GetLotSizeIn();
+				reqIn.setOrderId(order.getOrderId());
+				reqIn.setOperCode("O-SHIP");
+				reqIn.setLotStatusIn(Lists.newArrayList("OPERIN", "OPERSTART", ""));
+				GetLotSizeOut reqOut = SvcUtils.getBean(LotServices.class).getSize(reqIn);
+				lotSize = reqOut.getSize();
 			}
 
 			if (lotSize >= 100) {

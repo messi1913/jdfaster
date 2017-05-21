@@ -14,10 +14,11 @@ import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class GetMatCompList {
-	public GetMatCompListOut getMatCompList(GetMatCompListIn input) throws Exception {
+	public GetMatCompListOut getCompList(GetMatCompListIn input) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
+		List<MesMatComp> list;
 		{
 			CriteriaQuery<MesMatComp> cq = cb.createQuery(MesMatComp.class);
 			Root<MesMatComp> root = cq.from(MesMatComp.class);
@@ -31,9 +32,11 @@ public class GetMatCompList {
 			TypedQuery<MesMatComp> query = em.createQuery(cq);
 			query.setFirstResult(0);
 			query.setMaxResults(1);
+			list = query.getResultList();
 		}
 
 		GetMatCompListOut output = new GetMatCompListOut();
+		output.setList(list);
 		return output;
 	}
 }

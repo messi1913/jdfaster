@@ -14,8 +14,8 @@ import com.jdfaster.jdfsample.services.mat.get_comp_list.GetMatCompListOut;
 public class MatServices {
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_comp_list/")
-	public GetMatCompListOut getMatCompList(@RequestBody GetMatCompListIn input) throws Exception {
-		return new GetMatCompList().getMatCompList(input);
+	public GetMatCompListOut getCompList(@RequestBody GetMatCompListIn input) throws Exception {
+		return new GetMatCompList().getCompList(input);
 	}
 
 }
