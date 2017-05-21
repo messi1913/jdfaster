@@ -12,17 +12,15 @@ public class CreateOrder {
 		SvcUtils.checkNotEmpty("matCode", input.getMatCode());
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());
 		SvcUtils.checkNotEmpty("orderQty", input.getOrderQty());
-		
+
 		EntityManager em = SvcUtils.getEm();
 
 		if (SvcUtils.isEmpty(input.getOrderId())) {
 			input.setOrderId(UUID.randomUUID().toString());
 		}
 
-		MesOrder order = new MesOrder();
-		order.setOrderId(input.getOrderId());
-		order  = em.find(MesOrder.class, order);
-		
+		MesOrder order = em.find(MesOrder.class, input.getOrderId());
+
 		if (order != null)
 			throw new Exception("This Order Already Exist");
 
