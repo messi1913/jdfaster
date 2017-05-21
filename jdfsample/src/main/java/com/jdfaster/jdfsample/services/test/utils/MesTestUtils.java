@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.jdfaster.jdfsample.services.lot.instore.InstoreLot;
+import javax.persistence.EntityManager;
+
+import com.jdfaster.jdfsample.services.lot.LotServices;
 import com.jdfaster.jdfsample.services.lot.instore.InstoreLotIn;
 import com.jdfaster.jdfsample.services.lot.instore.InstoreLotOut;
-import com.jdfaster.jdfsample.services.lot.send.SendLot;
 import com.jdfaster.jdfsample.services.lot.send.SendLotIn;
+import com.jdfaster.jdfsample.services.mat.MatServices;
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
-import com.jdfaster.jdfsample.services.mat.view_comp_list.ViewMatCompList;
 import com.jdfaster.jdfsample.services.mat.view_comp_list.ViewMatCompListIn;
 import com.jdfaster.jdfsample.services.mat.view_comp_list.ViewMatCompListOut;
 import com.jdfaster.jdfsample.services.order.MesOrder;
@@ -45,15 +46,18 @@ public class MesTestUtils {
 	}
 
 	public static MesOrder getOrder(String testName, String lineCode, String matCode) throws Exception {
-		MesTestStatus testStatus;
-		{
-			// TODO Retrieve Test Status;
-			testStatus = null;
-			if (testStatus != null && testStatus.getLeftQty() > 0) {
-				testStatus.setLeftQty(testStatus.getLeftQty() - 1);
-				MesOrder order = null;
-				return order;
-			}
+		EntityManager em = SvcUtils.getEm();
+
+		// Check Test Status
+		MesTestStatus testStatus = new MesTestStatus();
+		testStatus.setTestName(testName);
+		testStatus.setLocCode(lineCode);
+		testStatus.setMatCode(matCode);
+		testStatus = em.find(MesTestStatus.class, testStatus);
+		if (testStatus != null && testStatus.getLeftQty() > 0) {
+			testStatus.setLeftQty(testStatus.getLeftQty() - 1);
+			MesOrder order = em.find(MesOrder.class, testStatus.getOrderId());
+			return order;
 		}
 
 		String orderId;
@@ -74,7 +78,7 @@ public class MesTestUtils {
 		{
 			ViewMatCompListIn reqIn = new ViewMatCompListIn();
 			reqIn.setMatCode(matCode);
-			ViewMatCompListOut reqOut = SvcUtils.getBean(ViewMatCompList.class).viewMatCompList(reqIn);
+			ViewMatCompListOut reqOut = SvcUtils.getBean(MatServices.class).viewMatCompList(reqIn);
 			compList = reqOut.getList();
 		}
 
@@ -87,7 +91,7 @@ public class MesTestUtils {
 				reqIn.setLocCode("S-RM");
 				reqIn.setMatCode(item.getCompMatCode());
 				reqIn.setLotQty(100);
-				InstoreLotOut reqOut = SvcUtils.getBean(InstoreLot.class).instore(reqIn);
+				InstoreLotOut reqOut = SvcUtils.getBean(LotServices.class).instore(reqIn);
 				compLotIdList.add(reqOut.getLotId());
 			}
 		}
@@ -98,17 +102,12 @@ public class MesTestUtils {
 				SendLotIn reqIn = new SendLotIn();
 				reqIn.setLotId(compLotId);
 				reqIn.setLocCode(lineCode);
-				SvcUtils.getBean(SendLot.class).send(reqIn);
+				SvcUtils.getBean(LotServices.class).send(reqIn);
 			}
 		}
 
-		MesOrder order;
+		MesOrder order = em.find(MesOrder.class, orderId);
 		{
-			{
-				// TODO Retrieve Order
-				order = null;
-			}
-
 			boolean insert = testStatus == null;
 			if (insert)
 				testStatus = new MesTestStatus();
@@ -117,6 +116,11 @@ public class MesTestUtils {
 			testStatus.setMatCode(matCode);
 			testStatus.setOrderId(orderId);
 			testStatus.setLeftQty(order.getOrderQty() - 1);
+			if (insert) {
+				em.persist(testStatus);
+			} else {
+				em.merge(testStatus);
+			}
 		}
 		return order;
 	}

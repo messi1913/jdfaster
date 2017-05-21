@@ -5,26 +5,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.jdfaster.jdfsample.services.lot.LotServices;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.MesLotRepository;
-import com.jdfaster.jdfsample.services.lot.create.CreateLot;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotIn;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotOut;
-import com.jdfaster.jdfsample.services.lot.end.EndLot;
 import com.jdfaster.jdfsample.services.lot.end.EndLotIn;
-import com.jdfaster.jdfsample.services.lot.pack.PackLot;
 import com.jdfaster.jdfsample.services.lot.pack.PackLotIn;
-import com.jdfaster.jdfsample.services.lot.ship.ShipLot;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class TestScen01 {
-	
+
 	@Autowired
 	MesLotRepository mesLotRep;
-	
+
 	public TestScen01Out scen01(TestScen01In input) throws Exception {
 		String lineCode = MesTestUtils.getLineCode();
 		try {
@@ -49,7 +46,7 @@ public class TestScen01 {
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-ASSY");
 				reqIn.setOrderId(order.getOrderId());
-				CreateLotOut reqOut = SvcUtils.getBean(CreateLot.class).create(reqIn);
+				CreateLotOut reqOut = SvcUtils.getBean(LotServices.class).create(reqIn);
 				lotId = reqOut.getLotId();
 			}
 
@@ -58,7 +55,7 @@ public class TestScen01 {
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-ASSY");
 				reqIn.setLotId(lotId);
-				SvcUtils.getBean(EndLot.class).end(reqIn);
+				SvcUtils.getBean(LotServices.class).end(reqIn);
 			}
 		}
 
@@ -68,7 +65,7 @@ public class TestScen01 {
 			reqIn.setLocCode(order.getLocCode());
 			reqIn.setOperCode("O-TEST");
 			reqIn.setLotId(lotId);
-			SvcUtils.getBean(EndLot.class).end(reqIn);
+			SvcUtils.getBean(LotServices.class).end(reqIn);
 		}
 
 		// 3. Pack
@@ -89,13 +86,12 @@ public class TestScen01 {
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-PACK");
 				reqIn.setLotIdList(lotIdList);
-				SvcUtils.getBean(PackLot.class).pack(reqIn);
+				SvcUtils.getBean(LotServices.class).pack(reqIn);
 			}
 		}
 
 		// 4. Ship
 		{
-			// TODO check ship lot size
 			int lotSize;
 			{
 				List<MesLot> lotList = mesLotRep.findByOrderIdAndOperCodeAndPLotId(order.getOrderId(), "O-SHIP", "N");
@@ -112,7 +108,7 @@ public class TestScen01 {
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-SHIP");
 				reqIn.setLotIdList(lotIdList);
-				SvcUtils.getBean(ShipLot.class).ship(reqIn);
+				SvcUtils.getBean(LotServices.class).ship(reqIn);
 			}
 		}
 	}
