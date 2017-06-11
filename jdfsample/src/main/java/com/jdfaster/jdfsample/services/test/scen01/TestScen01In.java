@@ -1,5 +1,7 @@
 package com.jdfaster.jdfsample.services.test.scen01;
 
-public class TestScen01In {
+import com.jdfaster.jdfsample.utils.TestIn;
+
+public class TestScen01In extends TestIn {
 
 }

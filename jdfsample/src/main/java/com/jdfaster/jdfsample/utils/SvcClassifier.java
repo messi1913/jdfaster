@@ -1,7 +1,5 @@
 package com.jdfaster.jdfsample.utils;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.aspectj.lang.Signature;
 
 import com.jdfaster.service.DefaultServiceClassifier;
@@ -19,9 +17,13 @@ public class SvcClassifier extends DefaultServiceClassifier implements ServiceCl
 
 	@Override
 	public boolean isCall(Signature signature, Object... args) {
-		if (args == null || args.length > 1 || args[0] instanceof HttpServletRequest)
+		try {
+			return SvcUtils.getSvc(signature, args) != null;
+		} catch (RuntimeException e) {
+			throw e;
+		} catch (Exception e) {
 			return false;
-		return true;
+		}
 	}
 
 }
