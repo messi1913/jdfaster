@@ -21,7 +21,6 @@ import com.jdfaster.jdfsample.services.mat.MesMat;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-@Transactional
 public class CreateLot {
 	public CreateLotOut create(CreateLotIn input) throws Exception {
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());
@@ -32,7 +31,7 @@ public class CreateLot {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		MesOrder order = new MesOrder();
-//		order.setOrderId(input.getOrderId());
+		// order.setOrderId(input.getOrderId());
 		order = em.find(MesOrder.class, input.getOrderId());
 
 		if ("END".equals(order.getOrderStatus()))
@@ -40,7 +39,7 @@ public class CreateLot {
 
 		SvcUtils.checkNotEmpty("matCode", order.getMatCode());
 		MesMat prod = new MesMat();
-//		prod.setMatCode(order.getMatCode());
+		// prod.setMatCode(order.getMatCode());
 		prod = em.find(MesMat.class, order.getMatCode());
 
 		SvcUtils.checkNotEmpty("flowCode", prod.getFlowCode());

@@ -11,13 +11,12 @@ import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.utils.LotUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-@Transactional
 public class EndLot {
 	public EndLotOut end(EndLotIn input) throws Exception {
 		SvcUtils.checkNotEmpty("lotId", input.getLotId());
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());
 		SvcUtils.checkNotEmpty("operCode", input.getOperCode());
-		
+
 		EntityManager em = SvcUtils.getEm();
 
 		MesLot lot = new MesLot();
@@ -27,7 +26,7 @@ public class EndLot {
 		if (!input.getOperCode().equals(lot.getOperCode()))
 			throw new Exception("The Oper Location of This Lot is not This Oper: " + input.getOperCode());
 
-		int lastHistSeq = LotUtils.getCurrentSeqNo( input.getLotId());
+		int lastHistSeq = LotUtils.getCurrentSeqNo(input.getLotId());
 
 		LotUtils.endLot(lot, ++lastHistSeq, "OPEREND");
 

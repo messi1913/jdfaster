@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-@Transactional
 public class CreateOrder {
 	public CreateOrderOut create(CreateOrderIn input) throws Exception {
 		SvcUtils.checkNotEmpty("matCode", input.getMatCode());

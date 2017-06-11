@@ -17,7 +17,6 @@ import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.MesLotHist;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-@Transactional
 public class LotUtils {
 	public static void endLot(MesLot lot, int histSeqNo, String tranCode) throws Exception {
 		if (!"OPERIN".equals(lot.getLotStatus()))
@@ -47,10 +46,10 @@ public class LotUtils {
 		hist.setOrderId(lot.getOrderId());
 		hist.setCompOrderId(lot.getCompOrderId());
 		// TODO
-		 em.merge(lot);
-		 em.persist(hist);
+		em.merge(lot);
+		em.persist(hist);
 	}
-	
+
 	public static int getCurrentSeqNo(String lotId) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -66,11 +65,11 @@ public class LotUtils {
 			query.setMaxResults(1);
 			list = query.getResultList();
 		}
-		
+
 		return SvcUtils.isEmpty(list) ? 0 : list.get(0).getSeqNo();
-		
+
 	}
-	
+
 	public static MesFlowOper getByOperCode(String operCode) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -87,7 +86,7 @@ public class LotUtils {
 		}
 		return list.get(0);
 	}
-	
+
 	public static MesFlowOper getNextOper(String flowCode, int seqNo) throws Exception {
 		EntityManager em = SvcUtils.getEm();
 		CriteriaBuilder cb = em.getCriteriaBuilder();

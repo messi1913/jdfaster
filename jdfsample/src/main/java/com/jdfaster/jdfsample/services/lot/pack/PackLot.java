@@ -14,7 +14,6 @@ import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.end.EndLotIn;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-@Transactional
 public class PackLot {
 	public PackLotOut pack(PackLotIn input) throws Exception {
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());

@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
-@Transactional
 public class GetMatCompList {
 	public GetMatCompListOut getCompList(GetMatCompListIn input) throws Exception {
 		EntityManager em = SvcUtils.getEm();

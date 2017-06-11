@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.persistence.EntityManager;
-
 import com.jdfaster.jdfsample.services.lot.LotServices;
 import com.jdfaster.jdfsample.services.lot.instore.InstoreLotIn;
 import com.jdfaster.jdfsample.services.lot.instore.InstoreLotOut;
@@ -14,11 +12,10 @@ import com.jdfaster.jdfsample.services.mat.MatServices;
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.services.mat.get_comp_list.GetMatCompListIn;
 import com.jdfaster.jdfsample.services.mat.get_comp_list.GetMatCompListOut;
-import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.services.order.OrderServices;
-import com.jdfaster.jdfsample.services.order.create.CreateOrderIn;
-import com.jdfaster.jdfsample.services.order.create.CreateOrderOut;
-import com.jdfaster.jdfsample.services.test.MesTestStatus;
+import com.jdfaster.jdfsample.services.order.create_test.CreateOrderTestIn;
+import com.jdfaster.jdfsample.services.order.pull_test.PullOrderTestIn;
+import com.jdfaster.jdfsample.services.order.pull_test.PullOrderTestOut;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
 public class MesTestUtils {
@@ -45,32 +42,26 @@ public class MesTestUtils {
 		return LINES_ALL;
 	}
 
-	public static MesOrder getOrder(String testName, String lineCode, String matCode) throws Exception {
-		EntityManager em = SvcUtils.getEm();
-
-		// Check Test Status
-		MesTestStatus testStatus = new MesTestStatus();
-		testStatus.setTestName(testName);
-		testStatus.setLocCode(lineCode);
-		testStatus.setMatCode(matCode);
-		testStatus = em.find(MesTestStatus.class, testStatus);
-		if (testStatus != null && testStatus.getLeftQty() > 0) {
-			testStatus.setLeftQty(testStatus.getLeftQty() - 1);
-			MesOrder order = em.find(MesOrder.class, testStatus.getOrderId());
-			return order;
+	public static String getOrderId(String testName, String lineCode, String matCode) throws Exception {
+		// Pull Test Status
+		{
+			PullOrderTestIn reqIn = new PullOrderTestIn();
+			reqIn.setTestName(testName);
+			reqIn.setLocCode(lineCode);
+			reqIn.setMatCode(matCode);
+			PullOrderTestOut reqOut = SvcUtils.getBean(OrderServices.class).pullTest(reqIn);
+			if (!SvcUtils.isEmpty(reqOut.getOrderId()))
+				return reqOut.getOrderId();
 		}
-
-		String orderId;
 
 		// Create Order
 		{
-			CreateOrderIn reqIn = new CreateOrderIn(); 
-			reqIn.setOrderDesc(testName + " Order");
+			CreateOrderTestIn reqIn = new CreateOrderTestIn();
+			reqIn.setTestName(testName);
 			reqIn.setMatCode(matCode);
 			reqIn.setLocCode(lineCode);
 			reqIn.setOrderQty(100);
-			CreateOrderOut reqOut = SvcUtils.getBean(OrderServices.class).create(reqIn);
-			orderId = reqOut.getOrderId();
+			SvcUtils.getBean(OrderServices.class).createTest(reqIn);
 		}
 
 		// View Comp List
@@ -106,23 +97,15 @@ public class MesTestUtils {
 			}
 		}
 
-		MesOrder order = em.find(MesOrder.class, orderId);
+		// Pull Test Status
 		{
-			boolean insert = testStatus == null;
-			if (insert)
-				testStatus = new MesTestStatus();
-			testStatus.setTestName(testName);
-			testStatus.setLocCode(lineCode);
-			testStatus.setMatCode(matCode);
-			testStatus.setOrderId(orderId);
-			testStatus.setLeftQty(order.getOrderQty() - 1);
-			if (insert) {
-				em.persist(testStatus);
-			} else {
-				em.merge(testStatus);
-			}
+			PullOrderTestIn reqIn = new PullOrderTestIn();
+			reqIn.setTestName(testName);
+			reqIn.setLocCode(lineCode);
+			reqIn.setMatCode(matCode);
+			PullOrderTestOut reqOut = SvcUtils.getBean(OrderServices.class).pullTest(reqIn);
+			return reqOut.getOrderId();
 		}
-		return order;
 	}
 
 	public static String getLineCode() {
