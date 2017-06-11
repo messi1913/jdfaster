@@ -1,6 +1,7 @@
 package com.jdfaster.jdfsample.utils;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,6 +46,16 @@ public class SvcUtils {
 	public static void checkNotEmpty(String paramName, Object value) throws Exception {
 		if (SvcUtils.isEmpty(value))
 			throw new Exception("Required param: " + paramName);
+	}
+
+	@SafeVarargs
+	public static <T> ArrayList<T> newArrayList(T... elements) {
+		if (elements == null) {
+			return null;
+		}
+		ArrayList<T> list = new ArrayList<T>();
+		java.util.Collections.addAll(list, elements);
+		return list;
 	}
 
 	private static Map<String, Svc> svcMap = new ConcurrentHashMap<String, Svc>();

@@ -11,6 +11,9 @@ import com.jdfaster.jdfsample.services.lot.create.CreateLotOut;
 import com.jdfaster.jdfsample.services.lot.end.EndLot;
 import com.jdfaster.jdfsample.services.lot.end.EndLotIn;
 import com.jdfaster.jdfsample.services.lot.end.EndLotOut;
+import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdList;
+import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdListIn;
+import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdListOut;
 import com.jdfaster.jdfsample.services.lot.get_list.GetLotList;
 import com.jdfaster.jdfsample.services.lot.get_list.GetLotListIn;
 import com.jdfaster.jdfsample.services.lot.get_list.GetLotListOut;
@@ -44,6 +47,11 @@ public class LotServices {
 		return new GetLotList().getList(input);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, path = "/get_id_list/")
+	public GetLotIdListOut getIdList(@RequestBody GetLotIdListIn input) throws Exception {
+		return new GetLotIdList().getIdList(input);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/instore/")
 	public InstoreLotOut instore(@RequestBody InstoreLotIn input) throws Exception {
 		return new InstoreLot().instore(input);
@@ -62,6 +70,11 @@ public class LotServices {
 	@RequestMapping(method = RequestMethod.POST, path = "/end/")
 	public EndLotOut end(@RequestBody EndLotIn input) throws Exception {
 		return new EndLot().end(input);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/get_pack/")
+	public GetLotIdListOut getPack(@RequestBody GetLotIdListIn input) throws Exception {
+		return new GetLotIdList().getIdList(input);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/pack/")

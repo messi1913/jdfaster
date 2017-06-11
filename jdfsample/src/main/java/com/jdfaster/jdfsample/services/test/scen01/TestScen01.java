@@ -1,15 +1,13 @@
 package com.jdfaster.jdfsample.services.test.scen01;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jdfaster.jdfsample.services.lot.LotServices;
-import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotIn;
 import com.jdfaster.jdfsample.services.lot.create.CreateLotOut;
 import com.jdfaster.jdfsample.services.lot.end.EndLotIn;
-import com.jdfaster.jdfsample.services.lot.get_list.GetLotListIn;
-import com.jdfaster.jdfsample.services.lot.get_list.GetLotListOut;
+import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdListIn;
+import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdListOut;
 import com.jdfaster.jdfsample.services.lot.pack.PackLotIn;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
 import com.jdfaster.jdfsample.services.order.MesOrder;
@@ -68,25 +66,17 @@ public class TestScen01 {
 
 		// 3. Pack
 		{
-			List<String> lotIdList = new ArrayList<String>();
+			List<String> lotIdList;
 			{
-				List<MesLot> list;
-				{
-					GetLotListIn reqIn = new GetLotListIn();
-					reqIn.setOrderId(order.getOrderId());
-					reqIn.setOperCode("O-PACK");
-					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART"));
-					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
-					list = reqOut.getList();
-				}
-
-				if (list.size() >= 10) {
-					for (int i = 0; i < 10; i++)
-						lotIdList.add(list.get(i).getLotId());
-				}
+				GetLotIdListIn reqIn = new GetLotIdListIn();
+				reqIn.setOrderId(order.getOrderId());
+				reqIn.setOperCode("O-PACK");
+				reqIn.setLotStatusIn(SvcUtils.newArrayList("OPERIN", "OPERSTART"));
+				GetLotIdListOut reqOut = SvcUtils.getBean(LotServices.class).getIdList(reqIn);
+				lotIdList = reqOut.getList();
 			}
 
-			if (!lotIdList.isEmpty()) {
+			if (!SvcUtils.isEmpty(lotIdList) && lotIdList.size() >= 10) {
 				PackLotIn reqIn = new PackLotIn();
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-PACK");
@@ -97,25 +87,17 @@ public class TestScen01 {
 
 		// 4. Ship
 		{
-			List<String> lotIdList = new ArrayList<String>();
+			List<String> lotIdList;
 			{
-				List<MesLot> list;
-				{
-					GetLotListIn reqIn = new GetLotListIn();
-					reqIn.setOrderId(order.getOrderId());
-					reqIn.setOperCode("O-PACK");
-					reqIn.setLotStatusIn(newArrayList("OPERIN", "OPERSTART"));
-					GetLotListOut reqOut = SvcUtils.getBean(LotServices.class).getList(reqIn);
-					list = reqOut.getList();
-				}
-
-				if (list.size() >= 10) {
-					for (int i = 0; i < 10; i++)
-						lotIdList.add(list.get(i).getLotId());
-				}
+				GetLotIdListIn reqIn = new GetLotIdListIn();
+				reqIn.setOrderId(order.getOrderId());
+				reqIn.setOperCode("O-SHIP");
+				reqIn.setLotStatusIn(SvcUtils.newArrayList("OPERIN", "OPERSTART"));
+				GetLotIdListOut reqOut = SvcUtils.getBean(LotServices.class).getIdList(reqIn);
+				lotIdList = reqOut.getList();
 			}
 
-			if (!lotIdList.isEmpty()) {
+			if (!SvcUtils.isEmpty(lotIdList) && lotIdList.size() >= 10) {
 				ShipLotIn reqIn = new ShipLotIn();
 				reqIn.setLocCode(order.getLocCode());
 				reqIn.setOperCode("O-SHIP");
@@ -123,15 +105,5 @@ public class TestScen01 {
 				SvcUtils.getBean(LotServices.class).ship(reqIn);
 			}
 		}
-	}
-
-	@SafeVarargs
-	public static <T> ArrayList<T> newArrayList(T... elements) {
-		if (elements == null) {
-			return null;
-		}
-		ArrayList<T> list = new ArrayList<T>();
-		java.util.Collections.addAll(list, elements);
-		return list;
 	}
 }
