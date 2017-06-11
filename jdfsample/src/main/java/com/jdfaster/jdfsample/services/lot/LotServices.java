@@ -39,17 +39,17 @@ import com.jdfaster.jdfsample.services.lot.ship.ShipLotOut;
 @Transactional
 public class LotServices {
 
-	@RequestMapping(method = RequestMethod.GET, path = "/get_size/")
+	@RequestMapping(method = RequestMethod.POST, path = "/get_size/")
 	public GetLotSizeOut getSize(@RequestBody GetLotSizeIn input) throws Exception {
 		return new GetLotSize().getSize(input);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/get_list/")
+	@RequestMapping(method = RequestMethod.POST, path = "/get_list/")
 	public GetLotListOut getList(@RequestBody GetLotListIn input) throws Exception {
 		return new GetLotList().getList(input);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/get_id_list/")
+	@RequestMapping(method = RequestMethod.POST, path = "/get_id_list/")
 	public GetLotIdListOut getIdList(@RequestBody GetLotIdListIn input) throws Exception {
 		return new GetLotIdList().getIdList(input);
 	}
@@ -74,7 +74,7 @@ public class LotServices {
 		return new EndLot().end(input);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/get_pack/")
+	@RequestMapping(method = RequestMethod.POST, path = "/get_pack/")
 	public GetLotIdListOut getPack(@RequestBody GetLotIdListIn input) throws Exception {
 		return new GetLotIdList().getIdList(input);
 	}

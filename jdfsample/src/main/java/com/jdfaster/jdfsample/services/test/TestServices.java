@@ -19,7 +19,7 @@ import com.jdfaster.jdfsample.services.test.scen01.TestScen01Out;
 @RequestMapping("/services/test/")
 public class TestServices {
 
-	@RequestMapping(method = RequestMethod.GET, path = "/md/")
+	@RequestMapping(method = RequestMethod.POST, path = "/md/")
 	public TestMdOut md() throws Exception {
 		return new TestMd().md(new TestMdIn());
 	}
