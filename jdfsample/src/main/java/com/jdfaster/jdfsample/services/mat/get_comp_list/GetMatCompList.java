@@ -10,9 +10,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jdfaster.jdfsample.services.mat.MesMatComp;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
+@Transactional
 public class GetMatCompList {
 	public GetMatCompListOut getCompList(GetMatCompListIn input) throws Exception {
 		EntityManager em = SvcUtils.getEm();

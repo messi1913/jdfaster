@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.order;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.jdfaster.jdfsample.services.order.create.CreateOrderOut;
 
 @RestController
 @RequestMapping("/services/order/")
+@Transactional
 public class OrderServices {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -19,7 +21,6 @@ public class OrderServices {
 		MesOrder order = new MesOrder();
 		return order;
 	}
-
 	@RequestMapping(method = RequestMethod.POST)
 	public CreateOrderOut create(@RequestBody CreateOrderIn input) throws Exception {
 		return new CreateOrder().create(input);

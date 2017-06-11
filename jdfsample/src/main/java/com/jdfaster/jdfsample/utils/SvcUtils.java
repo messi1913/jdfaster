@@ -9,13 +9,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.persistence.EntityManager;
 
 import org.aspectj.lang.Signature;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jdfaster.jdfsample.controller.CommonController;
 
 public class SvcUtils {
-
+	@Transactional
 	public static EntityManager getEm() throws Exception {
 		EntityManager em = getBean(CommonController.class).getEm();
 		return em;

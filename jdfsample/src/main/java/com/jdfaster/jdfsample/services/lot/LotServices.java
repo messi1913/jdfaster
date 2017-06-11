@@ -1,5 +1,6 @@
 package com.jdfaster.jdfsample.services.lot;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,7 @@ import com.jdfaster.jdfsample.services.lot.ship.ShipLotOut;
 
 @RestController
 @RequestMapping("/services/lot/")
+@Transactional
 public class LotServices {
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_size/")

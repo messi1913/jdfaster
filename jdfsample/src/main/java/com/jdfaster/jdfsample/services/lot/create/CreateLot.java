@@ -12,6 +12,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.utils.LotUtils;
@@ -19,6 +21,7 @@ import com.jdfaster.jdfsample.services.mat.MesMat;
 import com.jdfaster.jdfsample.services.order.MesOrder;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
+@Transactional
 public class CreateLot {
 	public CreateLotOut create(CreateLotIn input) throws Exception {
 		SvcUtils.checkNotEmpty("locCode", input.getLocCode());
@@ -87,7 +90,7 @@ public class CreateLot {
 		em.persist(order);
 
 		CreateLotOut output = new CreateLotOut();
-		
+		output.setLocCode(input.getLocCode());
 		output.setLotId(input.getLotId());
 		return output;
 	}

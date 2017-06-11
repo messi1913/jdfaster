@@ -10,11 +10,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.MesLotHist;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
+@Transactional
 public class LotUtils {
 	public static void endLot(MesLot lot, int histSeqNo, String tranCode) throws Exception {
 		if (!"OPERIN".equals(lot.getLotStatus()))

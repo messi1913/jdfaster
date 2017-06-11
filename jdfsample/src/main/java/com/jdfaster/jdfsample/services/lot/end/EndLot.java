@@ -4,11 +4,14 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jdfaster.jdfsample.services.flow.MesFlowOper;
 import com.jdfaster.jdfsample.services.lot.MesLot;
 import com.jdfaster.jdfsample.services.lot.utils.LotUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
+@Transactional
 public class EndLot {
 	public EndLotOut end(EndLotIn input) throws Exception {
 		SvcUtils.checkNotEmpty("lotId", input.getLotId());
@@ -36,6 +39,9 @@ public class EndLot {
 		LotUtils.updateLot(lot, ++lastHistSeq, "OPERIN");
 
 		EndLotOut output = new EndLotOut();
+		output.setLocCode(input.getLocCode());
+		output.setLotId(input.getLotId());
+		output.setOrderId(lot.getOrderId());
 		return output;
 	}
 }

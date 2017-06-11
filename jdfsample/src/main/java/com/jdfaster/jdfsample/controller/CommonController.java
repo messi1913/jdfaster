@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
+@Transactional
 public class CommonController implements ApplicationContextAware {
 	@Autowired
 	private EntityManager em;
-
 	public EntityManager getEm() {
 		return em;
 	}

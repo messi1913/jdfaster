@@ -6,6 +6,7 @@ public class PackLotIn {
 	private String lotId;
 	private String locCode;
 	private String operCode;
+	private String lotIds;
 	private List<String> lotIdList;
 
 	public String getLotId() {
@@ -39,4 +40,13 @@ public class PackLotIn {
 	public void setLotIdList(List<String> lotIdList) {
 		this.lotIdList = lotIdList;
 	}
+
+	public String getLotIds() {
+		return lotIds;
+	}
+
+	public void setLotIds(String lotIds) {
+		this.lotIds = lotIds;
+	}
+	
 }
