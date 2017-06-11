@@ -1,7 +1,6 @@
 package com.jdfaster.service;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,8 +22,10 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 
 	// ScenarioExecutor 의 오버라이드.
 	@Override
-	public void execute(final String name) throws Exception {
-		// BeanInfo 객체를 SyncCtrlUtils 통해서 갖고옴.(싱글톤 & 동기방식) 
+	public void execute(final Target target) throws Exception {
+		final String name = target.getName();
+
+		// BeanInfo 객체를 SyncCtrlUtils 통해서 갖고옴.(싱글톤 & 동기방식)
 		BeanInfo beanInfo = SyncCtrlUtils.wrap(name, beanInfos, name, new Closure<BeanInfo, Exception>() {
 			@Override
 			public BeanInfo execute() throws Exception {
@@ -49,11 +50,9 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 
 				if (method == null)
 					throw new NoSuchMethodError(name);
+
 				// 메서드의 파라미터 유형 클래스를 담음.
-				List<Object> argList = new ArrayList<Object>();
-				for (Class<?> item : method.getParameterTypes()) {
-					argList.add(item.newInstance());
-				}
+				List<Object> argList = target.getArgs();
 				args = argList.toArray(new Object[argList.size()]);
 				// 클래스명 을 통해서 bean 을 갖고옴.
 				String beanName = StringUtils.uncapitalize(clazz.getSimpleName());

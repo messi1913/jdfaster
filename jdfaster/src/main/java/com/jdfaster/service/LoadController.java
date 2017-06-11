@@ -1,4 +1,4 @@
-package com.jdfaster.test;
+package com.jdfaster.service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,9 +9,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import com.jdfaster.service.DefaultScenarioExecutor;
-import com.jdfaster.service.ScenarioExecutor;
 
 public class LoadController {
 	private static final Logger logger = LoggerFactory.getLogger(LoadController.class);
@@ -58,7 +55,7 @@ public class LoadController {
 		synchronized (this) {
 			if (!STARTABLE.contains(status))
 				throw new IllegalStateException(
-						"Cannot start test, because of current status of LoadController:" + status);
+						"Cannot start load, because of current status of LoadController:" + status);
 
 			if (concurrentUserSize < 1)
 				new IllegalArgumentException("concurrentUserSize must be higher than 0!");
@@ -106,7 +103,7 @@ public class LoadController {
 								counter.set(0, cnt + 1);
 							}
 							Target target = tgs.get(r.nextInt(n));
-							scenarioExecutor.execute(target.getName());
+							scenarioExecutor.execute(target);
 						} catch (Exception e) {
 							logger.error(e.getMessage(), e);
 						}
@@ -138,7 +135,7 @@ public class LoadController {
 		synchronized (this) {
 			if (UNSTOPPABLE.contains(status))
 				throw new IllegalStateException(
-						"Cannot stop test, because of current status of LoadController:" + status);
+						"Cannot stop load, because of current status of LoadController:" + status);
 			status = "stopping";
 		}
 
@@ -151,27 +148,6 @@ public class LoadController {
 				status = "stopped";
 				taskExecutor = null;
 			}
-		}
-	}
-
-	public static class Target {
-		private String name;
-		private int loadFactor = 1;
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public int getLoadFactor() {
-			return loadFactor;
-		}
-
-		public void setLoadFactor(int loadFactor) {
-			this.loadFactor = loadFactor;
 		}
 	}
 }
