@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="main" minHeight="798.0" minWidth="1278.0" prefHeight="798.0" prefWidth="1278.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samsung.sds.sos.client.application.AppController">
+	<children>
+      <AnchorPane fx:id="head" prefHeight="58.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+	  <AnchorPane fx:id="body" layoutY="54.0" prefHeight="758.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0" />
+	  <AnchorPane fx:id="toast" layoutY="54.0" prefHeight="40.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0" /> 
+	</children>
+</AnchorPane>
