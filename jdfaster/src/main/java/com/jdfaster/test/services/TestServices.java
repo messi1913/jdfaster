@@ -1,5 +1,7 @@
 package com.jdfaster.test.services;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +27,8 @@ import com.jdfaster.test.services.save_result.SaveTestResultOut;
 public class TestServices {
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_list/")
-	public GetTestListOut getList() throws Exception {
-		return new GetTestList().getList(new GetTestListIn());
+	public GetTestListOut getList(ServletContext sc) throws Exception {
+		return new GetTestList().getList(sc, new GetTestListIn());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_result/")

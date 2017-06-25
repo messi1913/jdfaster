@@ -52,10 +52,7 @@ public class TestAspect implements InitializingBean {
 			}
 			method = clazz.getMethod(signature.getName(), parameterTypes);
 		}
-		boolean testClass = clazz.getAnnotation(TestScenario.class) != null;
-		if (!testClass) {
-			testClass = method.getAnnotation(TestScenario.class) != null;
-		}
+		boolean testClass = method.getAnnotation(TestScenario.class) != null;
 
 		// 이미 테스트 실행 중인지 여부 확인
 		boolean ongoing = TestUtils.isOngoing();
@@ -75,6 +72,8 @@ public class TestAspect implements InitializingBean {
 				Test test = new Test();
 				test.setClazz(clazz);
 				test.setMethod(method);
+				if (method.getParameterTypes() != null)
+					test.setParameterTypes(method.getParameterTypes());
 				test.setArgs(args);
 
 				Object result = TestUtils.run(test, new Closure<Object, Throwable>() {

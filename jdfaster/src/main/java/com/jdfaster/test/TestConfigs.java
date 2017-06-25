@@ -29,4 +29,5 @@ public class TestConfigs {
 			basePackages.add(bp);
 		}
 	}
+
 }
