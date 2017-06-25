@@ -36,15 +36,16 @@ public class TestServices {
 	@Autowired
 	private ServletContext context;
 
-	@RequestMapping(method = RequestMethod.GET, path = "/get_configs/")
-	public GetTestConfigsOut getConfigs() throws Exception {
-		return new GetTestConfigs().getConfigs(context, new GetTestConfigsIn());
-	}
+	// @RequestMapping(method = RequestMethod.GET, path = "/get_configs/")
+	// public GetTestConfigsOut getConfigs() throws Exception {
+	// return new GetTestConfigs().getConfigs(context, new GetTestConfigsIn());
+	// }
 
-	@RequestMapping(method = RequestMethod.POST, path = "/set_configs/")
-	public SetTestConfigsOut setConfigs(@RequestBody SetTestConfigsIn input) throws Exception {
-		return new SetTestConfigs().setConfigs(context, input);
-	}
+	// @RequestMapping(method = RequestMethod.POST, path = "/set_configs/")
+	// public SetTestConfigsOut setConfigs(@RequestBody SetTestConfigsIn input)
+	// throws Exception {
+	// return new SetTestConfigs().setConfigs(context, input);
+	// }
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_list/")
 	public GetTestListOut getList() throws Exception {
@@ -56,19 +57,22 @@ public class TestServices {
 		return new RunTest().run(context, input);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/get_result/")
-	public GetTestResultOut getResult(GetTestResultIn input) throws Exception {
-		return new GetTestResult().getResult(input);
-	}
-
-	@RequestMapping(method = RequestMethod.POST, path = "/save_result/")
-	public SaveTestResultOut saveResult(SaveTestResultIn input) throws Exception {
-		return new SaveTestResult().saveResult(input);
-	}
-
-	@RequestMapping(method = RequestMethod.GET, path = "/get_result_list/")
-	public GetTestResultListOut getResultList(GetTestResultListIn input) throws Exception {
-		return new GetTestResultList().getResultList(input);
-	}
+	// @RequestMapping(method = RequestMethod.GET, path = "/get_result/")
+	// public GetTestResultOut getResult(GetTestResultIn input) throws Exception
+	// {
+	// return new GetTestResult().getResult(input);
+	// }
+	//
+	// @RequestMapping(method = RequestMethod.POST, path = "/save_result/")
+	// public SaveTestResultOut saveResult(SaveTestResultIn input) throws
+	// Exception {
+	// return new SaveTestResult().saveResult(input);
+	// }
+	//
+	// @RequestMapping(method = RequestMethod.GET, path = "/get_result_list/")
+	// public GetTestResultListOut getResultList(GetTestResultListIn input)
+	// throws Exception {
+	// return new GetTestResultList().getResultList(input);
+	// }
 
 }
