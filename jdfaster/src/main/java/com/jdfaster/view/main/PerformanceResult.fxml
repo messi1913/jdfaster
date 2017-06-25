@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="900.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<AnchorPane prefHeight="755.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <left>
@@ -30,19 +29,25 @@
                   <content>
                     <AnchorPane>
                            <children>
-                              <TextArea prefHeight="823.0" prefWidth="833.0" />
+                              <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
                 <Tab text="Request">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane>
+                           <children>
+                              <TextArea editable="false" />
+                           </children></AnchorPane>
                   </content>
                 </Tab>
                   <Tab text="Response Data">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane>
+                           <children>
+                              <TextArea />
+                           </children></AnchorPane>
                      </content>
                   </Tab>
               </tabs>
