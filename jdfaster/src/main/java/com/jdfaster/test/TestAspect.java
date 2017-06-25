@@ -72,8 +72,6 @@ public class TestAspect implements InitializingBean {
 				Test test = new Test();
 				test.setClazz(clazz);
 				test.setMethod(method);
-				if (method.getParameterTypes() != null)
-					test.setParameterTypes(method.getParameterTypes());
 				test.setArgs(args);
 
 				Object result = TestUtils.run(test, new Closure<Object, Throwable>() {

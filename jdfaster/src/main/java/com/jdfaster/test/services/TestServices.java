@@ -2,6 +2,7 @@ package com.jdfaster.test.services;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +26,12 @@ import com.jdfaster.test.services.save_result.SaveTestResultOut;
 @RestController
 @RequestMapping("/services/jdftest/")
 public class TestServices {
+	@Autowired
+	private ServletContext context;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_list/")
-	public GetTestListOut getList(ServletContext sc) throws Exception {
-		return new GetTestList().getList(sc, new GetTestListIn());
+	public GetTestListOut getList() throws Exception {
+		return new GetTestList().getList(context, new GetTestListIn());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_result/")

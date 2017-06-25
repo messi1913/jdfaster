@@ -7,11 +7,12 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdfaster.test.Test;
 import com.jdfaster.test.TestConfigs;
 import com.jdfaster.test.TestScenario;
+import com.jdfaster.test.services.get_list.GetTestListOut.TestInfo;
 
 import net.sf.common.util.ReflectionUtils;
 
@@ -23,7 +24,7 @@ public class GetTestList {
 		if (configs.getBasePackages().isEmpty())
 			return new GetTestListOut();
 
-		List<Test> list = new ArrayList<>();
+		List<TestInfo> list = new ArrayList<>();
 		for (String bp : configs.getBasePackages()) {
 			StringBuffer buf = new StringBuffer("classpath*:").append(StringUtils.replace(bp, ".", "/"));
 			if (!buf.toString().endsWith("/"))
@@ -38,24 +39,23 @@ public class GetTestList {
 						continue;
 				}
 
-				// String prefix;
-				// {
-				// RequestMapping rm =
-				// clazz.getAnnotation(RequestMapping.class);
-				// prefix = rm == null || rm.value().length == 0 ? "/" :
-				// rm.value()[0];
-				// if (!prefix.endsWith("/"))
-				// prefix += "/";
-				// }
+				String prefix = getPrefix(clazz.getAnnotation(RequestMapping.class));
 
 				for (Method method : clazz.getMethods()) {
 					if (method.getAnnotation(TestScenario.class) == null)
 						continue;
-					Test test = new Test();
-					test.setClazz(clazz);
-					test.setMethod(method);
-					if (method.getParameterTypes() != null)
-						test.setParameterTypes(method.getParameterTypes());
+
+					RequestMapping rm = method.getAnnotation(RequestMapping.class);
+					if (rm == null)
+						continue;
+
+					String suffix = getSuffix(rm);
+
+					TestInfo test = new TestInfo();
+					test.setName(clazz.getSimpleName() + "." + method.getName());
+					test.setUrl(prefix + suffix);
+					test.setClassName(clazz.getName());
+					test.setMethodName(method.getName());
 					list.add(test);
 				}
 			}
@@ -64,5 +64,45 @@ public class GetTestList {
 		GetTestListOut output = new GetTestListOut();
 		output.setList(list);
 		return output;
+	}
+
+	private static String getPrefix(RequestMapping rm) {
+		if (rm == null) {
+			return "/";
+		}
+
+		String prefix;
+		if (rm.path().length != 0) {
+			prefix = rm.path()[0];
+		} else if (rm.value().length != 0) {
+			prefix = rm.value()[0];
+		} else {
+			return "/";
+		}
+
+		if (!prefix.endsWith("/"))
+			prefix += "/";
+
+		return prefix;
+	}
+
+	private static String getSuffix(RequestMapping rm) {
+		if (rm == null) {
+			return "/";
+		}
+
+		String suffix;
+		if (rm.path().length != 0) {
+			suffix = rm.path()[0];
+		} else if (rm.value().length != 0) {
+			suffix = rm.value()[0];
+		} else {
+			return "/";
+		}
+
+		if (suffix.startsWith("/"))
+			suffix = suffix.substring(1);
+
+		return suffix;
 	}
 }
