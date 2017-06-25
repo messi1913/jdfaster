@@ -13,6 +13,7 @@ import com.jdfaster.jdfsample.services.test.md.TestMdOut;
 import com.jdfaster.jdfsample.services.test.scen01.TestScen01;
 import com.jdfaster.jdfsample.services.test.scen01.TestScen01In;
 import com.jdfaster.jdfsample.services.test.scen01.TestScen01Out;
+import com.jdfaster.test.TestScenario;
 
 @Transactional(propagation = Propagation.SUPPORTS)
 @RestController
@@ -25,6 +26,7 @@ public class TestServices {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/scen01/")
+	@TestScenario
 	public TestScen01Out scen01(@RequestBody TestScen01In input) throws Exception {
 		return new TestScen01().scen01(input);
 	}

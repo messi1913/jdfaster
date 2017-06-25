@@ -12,11 +12,9 @@ import com.jdfaster.jdfsample.services.lot.pack.PackLotIn;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
 import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
-import com.jdfaster.test.TestScenario;
 
 public class TestScen01 {
 
-	@TestScenario
 	public TestScen01Out scen01(TestScen01In input) throws Exception {
 		String lineCode = MesTestUtils.getLineCode();
 		try {
