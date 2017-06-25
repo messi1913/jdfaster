@@ -1,8 +1,5 @@
 package com.jdfaster.test.services.get_configs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GetTestConfigsOut {
 	private String targetUrl;
 	private long connectionTimeout;
