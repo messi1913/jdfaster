@@ -8,8 +8,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-	<context:component-scan base-package="com.jdfaster.jdfsample.services" />
+	<!-- 
 	<context:component-scan base-package="com.jdfaster.test.services" />
+	<context:component-scan base-package="com.jdfaster.jdfsample.services" />
 
 	<mvc:annotation-driven />
 
@@ -21,10 +22,10 @@
 				pointcut="execution(* com.jdfaster.jdfsample.services.*.*.*(..))" />
 		</aop:aspect>
 	</aop:config>
-	<bean id="testAspect" class="com.jdfaster.test.TestAspect">
+	<bean id="testAspect" class="com.jdfaster.jdfsample.aop.TestAspect">
 		<property name="serviceClassifier">
 			<bean class="com.jdfaster.jdfsample.utils.SvcClassifier"></bean>
 		</property>
-	</bean>
+	</bean> -->
 
 </beans>
