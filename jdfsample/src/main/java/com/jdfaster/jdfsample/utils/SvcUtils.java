@@ -70,7 +70,7 @@ public class SvcUtils {
 		String key = clazz.getName() + "." + methodName;
 		if (svcMap.containsKey(key)) {
 			Svc svc = svcMap.get(key);
-			if (svc.getId() == null)
+			if (svc.getUrl() == null)
 				return null;
 		}
 
@@ -120,7 +120,7 @@ public class SvcUtils {
 				svc.setMethod(methods[0]);
 			}
 
-			svc.setId(buf.toString());
+			svc.setUrl(buf.toString());
 			svc.setInputType(args[0].getClass());
 			svc.setOutputType(method.getReturnType());
 
@@ -131,17 +131,17 @@ public class SvcUtils {
 	}
 
 	public static class Svc {
-		private String id;
+		private String url;
 		private RequestMethod method;
 		private Class<?> inputType;
 		private Class<?> outputType;
 
-		public String getId() {
-			return id;
+		public String getUrl() {
+			return url;
 		}
 
-		public void setId(String id) {
-			this.id = id;
+		public void setUrl(String url) {
+			this.url = url;
 		}
 
 		public RequestMethod getMethod() {

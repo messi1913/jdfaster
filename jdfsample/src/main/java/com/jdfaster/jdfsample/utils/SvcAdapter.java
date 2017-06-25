@@ -2,6 +2,8 @@ package com.jdfaster.jdfsample.utils;
 
 import java.nio.charset.Charset;
 
+import javax.servlet.ServletContext;
+
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
@@ -9,18 +11,23 @@ import org.apache.http.entity.ContentType;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jdfaster.jdfsample.utils.SvcUtils.Svc;
 import com.jdfaster.service.DefaultServiceAdapter;
 import com.jdfaster.service.ServiceAdapter;
 import com.jdfaster.test.Test;
+import com.jdfaster.test.TestConfigs;
 import com.jdfaster.test.TestUtils;
 
 public class SvcAdapter extends DefaultServiceAdapter implements ServiceAdapter {
 
-	private static final ObjectMapper om;
+	@Autowired
+	private ServletContext context;
+
+	private static final ObjectMapper mapper;
 	static {
-		om = new ObjectMapper();
+		mapper = new ObjectMapper();
 	}
 
 	@Override
@@ -37,11 +44,11 @@ public class SvcAdapter extends DefaultServiceAdapter implements ServiceAdapter 
 
 		String uri;
 		{
-			TestIn testIn = (TestIn) test.getArgs()[0];
 			StringBuffer buf = new StringBuffer();
 			{
-				buf = buf.append(testIn.getTargetUrl());
-				String id = svc.getId();
+				TestConfigs configs = TestConfigs.getInstance(context.getContextPath());
+				buf = buf.append(configs.getTargetUrl());
+				String id = svc.getUrl();
 				if (buf.toString().endsWith("/")) {
 					if (id.startsWith("/"))
 						id = id.substring(1);
@@ -58,7 +65,7 @@ public class SvcAdapter extends DefaultServiceAdapter implements ServiceAdapter 
 			Object input = args[0];
 			String inStr;
 			{
-				inStr = om.writeValueAsString(input);
+				inStr = mapper.writeValueAsString(input);
 			}
 
 			Request req;
