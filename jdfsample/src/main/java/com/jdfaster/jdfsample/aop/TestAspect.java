@@ -5,9 +5,16 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import com.jdfaster.jdfsample.utils.SvcClassifier;
+
 @Aspect
 @Component
 public class TestAspect extends com.jdfaster.test.TestAspect {
+
+	public TestAspect() {
+		super();
+		setServiceClassifier(new SvcClassifier());
+	}
 
 	@Around("execution(* com.jdfaster.jdfsample.services.*.*Services.*(..))")
 	@Override

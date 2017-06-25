@@ -21,7 +21,7 @@ public class TestAspect implements InitializingBean {
 
 	public void afterPropertiesSet() throws Exception {
 		if (serviceClassifier == null)
-			throw new IllegalArgumentException("serviceClassier is required!");
+			throw new IllegalArgumentException("serviceClassifier is required!");
 	}
 
 	public Object invoke(final ProceedingJoinPoint point) throws Throwable {
