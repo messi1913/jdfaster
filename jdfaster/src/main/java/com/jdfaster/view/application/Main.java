@@ -18,7 +18,7 @@ public class Main extends Application {
     @FXML
     private AnchorPane main, head, body;
     @FXML
-    private Button btnMain, btnResult;
+    private Button btnMain, btnResult, btnSummary;
     
     private AnchorPane rootLayout;
 	
@@ -57,6 +57,12 @@ public class Main extends Application {
 	}
 	
 	@FXML
+	private void initialize() throws IOException {
+		this.btnMainOnMouseClicked(null);
+		
+	}
+	
+	@FXML
     public void btnMainOnMouseClicked(MouseEvent event) throws IOException {
 		Node node = (Node)FXMLLoader.load(getClass().getResource("../main/PerformanceMain.fxml"));
 		body.getChildren().setAll(node);
@@ -65,6 +71,12 @@ public class Main extends Application {
     @FXML
     public void btnResultOnMouseClicked(MouseEvent event) throws IOException {
     	Node node = (Node)FXMLLoader.load(getClass().getResource("../main/PerformanceResult.fxml"));
+		body.getChildren().setAll(node);
+    }
+    
+    @FXML
+    public void btnSummaryOnMouseClicked(MouseEvent event) throws IOException {
+    	Node node = (Node)FXMLLoader.load(getClass().getResource("../main/PerformanceSummary.fxml"));
 		body.getChildren().setAll(node);
     }
 

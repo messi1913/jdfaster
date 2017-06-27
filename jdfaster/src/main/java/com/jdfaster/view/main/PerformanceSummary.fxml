@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="755.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdfaster.view.main.PerformanceSummary">
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <top>
+            <VBox spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                     <children>
+                        <Label style="-fx-background-color: gray;" text="Display Only" />
+                        <CheckBox mnemonicParsing="false" text="ALL" />
+                        <CheckBox mnemonicParsing="false" text="Success" />
+                        <CheckBox mnemonicParsing="false" text="Error" />
+                     </children>
+                  </HBox>
+                  <Separator opacity="0.69" prefWidth="200.0" style="-fx-background-color: gray;" />
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <TableView BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn prefWidth="75.0" text="No" />
+                <TableColumn prefWidth="298.0" text="Service" />
+                  <TableColumn prefWidth="177.0" text="Thread name" />
+                  <TableColumn minWidth="0.0" prefWidth="140.0" text="Average Run Time" />
+                  <TableColumn prefWidth="140.0" text="Min Run Time" />
+                  <TableColumn prefWidth="140.0" text="Error (%)" />
+                  <TableColumn prefWidth="140.0" text="Throughput" />
+              </columns>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </TableView>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

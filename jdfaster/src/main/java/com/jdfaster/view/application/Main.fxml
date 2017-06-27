@@ -12,6 +12,7 @@
                <children>
                   <Button fx:id="btnMain" mnemonicParsing="false" onMouseClicked="#btnMainOnMouseClicked" text="Main" />
                   <Button fx:id="btnResult" mnemonicParsing="false" onMouseClicked="#btnResultOnMouseClicked" text="Result" />
+                  <Button fx:id="btnSummary" mnemonicParsing="false" onMouseClicked="#btnSummaryOnMouseClicked" text="Summary" />
                </children>
             </HBox>
          </children></AnchorPane>
