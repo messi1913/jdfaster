@@ -14,6 +14,7 @@ public class SetTestConfigs {
 		configs.setNumberOfThreads(input.getNumberOfThreads());
 
 		SetTestConfigsOut output = new SetTestConfigsOut();
+		output.setResult("Completed");
 		return output;
 	}
 }

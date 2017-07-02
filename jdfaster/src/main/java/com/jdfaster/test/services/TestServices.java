@@ -36,16 +36,15 @@ public class TestServices {
 	@Autowired
 	private ServletContext context;
 
-	// @RequestMapping(method = RequestMethod.GET, path = "/get_configs/")
-	// public GetTestConfigsOut getConfigs() throws Exception {
-	// return new GetTestConfigs().getConfigs(context, new GetTestConfigsIn());
-	// }
+	 @RequestMapping(method = RequestMethod.GET, path = "/get_configs/")
+	 public GetTestConfigsOut getConfigs() throws Exception {
+	 return new GetTestConfigs().getConfigs(context, new GetTestConfigsIn());
+	 }
 
-	// @RequestMapping(method = RequestMethod.POST, path = "/set_configs/")
-	// public SetTestConfigsOut setConfigs(@RequestBody SetTestConfigsIn input)
-	// throws Exception {
-	// return new SetTestConfigs().setConfigs(context, input);
-	// }
+	 @RequestMapping(method = RequestMethod.POST, path = "/set_configs/")
+	 public SetTestConfigsOut setConfigs(@RequestBody SetTestConfigsIn input) throws Exception {
+	 return new SetTestConfigs().setConfigs(context, input);
+	 }
 
 	@RequestMapping(method = RequestMethod.GET, path = "/get_list/")
 	public GetTestListOut getList() throws Exception {

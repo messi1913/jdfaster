@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
+import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class JsonUtil {
@@ -29,22 +30,31 @@ public class JsonUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T> T request(String uri, MethodType type, Class<T> clazz) throws Exception {
+	
+	public static <T> T request(String uri, MethodType type, Class<T> requiredDVO) throws Exception {
+		return request(uri, type, "", requiredDVO);
+	}
+	
+	public static <T> T request(String uri, MethodType type, String inputString, Class<T> requiredDVO) throws Exception {
 		Request req;
-		if (MethodType.POST.equals(type))
-			req = Request.Post(uri);
-		else if (MethodType.GET.equals(type))
+
+		switch (type) {
+		case GET:
 			req = Request.Get(uri);
-		else if (MethodType.DELETE.equals(type))
-			req = Request.Delete(uri);
-		else
-			req = Request.Put(uri);
+			break;
+		case POST:
+			req = Request.Post(uri).bodyString(inputString,	ContentType.create("application/json"));
+			break;
+		default :
+			req = Request.Post(uri).bodyString(inputString,	ContentType.create("application/json"));
+			break;
+		}
 		Response resp = req.execute();
 		String outStr;
 		{
 			Content content = resp.returnContent();
 			outStr = content.asString(Charset.forName("UTF-8"));
 		}
-		return new ObjectMapper().readValue(outStr, clazz);
+		return new ObjectMapper().readValue(outStr, requiredDVO);
 	}
 }
