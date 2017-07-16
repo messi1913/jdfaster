@@ -52,7 +52,7 @@ public class TestServices {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/run/")
-	public RunTestOut run(RunTestIn input) throws Exception {
+	public RunTestOut run(@RequestBody RunTestIn input) throws Exception {
 		return new RunTest().run(context, input);
 	}
 

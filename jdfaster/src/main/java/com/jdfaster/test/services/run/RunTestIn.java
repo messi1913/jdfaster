@@ -4,13 +4,13 @@ import com.jdfaster.test.services.get_list.GetTestListOut.TestInfo;
 import com.jdfaster.test.services.set_configs.SetTestConfigsIn;
 
 public class RunTestIn extends SetTestConfigsIn {
-	private TestInfo test;
+	private TestInfo testInfo;
 
-	public TestInfo getTest() {
-		return test;
+	public TestInfo getTestInfo() {
+		return testInfo;
 	}
 
-	public void setTest(TestInfo test) {
-		this.test = test;
+	public void setTestInfo(TestInfo testInfo) {
+		this.testInfo = testInfo;
 	}
 }
