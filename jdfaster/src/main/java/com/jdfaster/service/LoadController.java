@@ -8,10 +8,8 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Controller;
-@Controller
+
 public class LoadController {
 	private static final Logger logger = LoggerFactory.getLogger(LoadController.class);
 
@@ -24,7 +22,6 @@ public class LoadController {
 	private String status;
 	private int concurrentUserSize;
 	private List<Target> targets;
-	@Autowired
 	private ThreadPoolTaskExecutor taskExecutor;
 
 	public String getStatus() {

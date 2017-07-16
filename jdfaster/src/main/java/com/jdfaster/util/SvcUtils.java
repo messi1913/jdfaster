@@ -21,9 +21,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.jdfaster.test.services.run.RunTestOut;
-import com.jdfaster.test.services.run.TestResultDVO;
+import com.jdfaster.test.services.run.TestResult;
 
-public class SvcUtil {
+public class SvcUtils {
 	public static String makeDefaultPath() {
 		StringBuilder sb = new StringBuilder(System.getProperty("user.home"));
 		sb.append(File.separator).append("Documents").append(File.separator).append("Jdfaster");
@@ -38,13 +38,13 @@ public class SvcUtil {
 			folder.mkdir();
 		}
 
-		List<TestResultDVO> resultDVOList = testDVO.getResultDVOList();
+		List<TestResult> resultDVOList = testDVO.getResultDVOList();
 
 		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 		Node root = document.createElement("TestResult");
 		document.appendChild(root);
 		{
-			for (TestResultDVO dvo : resultDVOList) {
+			for (TestResult dvo : resultDVOList) {
 				Element service = document.createElement("Servicename");
 				service.setAttribute("methodName", dvo.getMethodName());
 				root.appendChild(service);
@@ -105,7 +105,7 @@ public class SvcUtil {
 		Properties prop = new Properties();
 		String propFileName = "config/config.properties";
 		
-		inputStream = SvcUtil.class.getClassLoader().getResourceAsStream(propFileName);
+		inputStream = SvcUtils.class.getClassLoader().getResourceAsStream(propFileName);
 
 		if (inputStream != null) {
 			prop.load(inputStream);

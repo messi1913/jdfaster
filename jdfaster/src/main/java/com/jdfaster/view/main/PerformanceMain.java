@@ -10,12 +10,12 @@ import com.jdfaster.test.services.get_list.GetTestListOut;
 import com.jdfaster.test.services.get_list.GetTestListOut.TestInfo;
 import com.jdfaster.test.services.run.RunTestIn;
 import com.jdfaster.test.services.run.RunTestOut;
-import com.jdfaster.test.services.run.TestResultDVO;
+import com.jdfaster.test.services.run.TestResult;
 import com.jdfaster.test.services.set_configs.SetTestConfigsIn;
 import com.jdfaster.test.services.set_configs.SetTestConfigsOut;
-import com.jdfaster.util.JsonUtil;
-import com.jdfaster.util.JsonUtil.MethodType;
-import com.jdfaster.util.SvcUtil;
+import com.jdfaster.util.JsonUtils;
+import com.jdfaster.util.JsonUtils.MethodType;
+import com.jdfaster.util.SvcUtils;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -38,10 +38,10 @@ public class PerformanceMain {
 	private ComboBox<String> cmbScenario;
 
 	@FXML
-	private TableView<TestResultDVO> tvResult;
+	private TableView<TestResult> tvResult;
 
 	@FXML
-	private TableColumn<TestResultDVO, String> colNo, colService, colthreadName, colStartTime, colRunTime, colStatus,
+	private TableColumn<TestResult, String> colNo, colService, colthreadName, colStartTime, colRunTime, colStatus,
 			colConTime;
 	
 	private RunTestIn testDVO;
@@ -66,11 +66,11 @@ public class PerformanceMain {
 	private void initialize() throws Exception {
 		
 		
-		baseUrl = SvcUtil.getProperties("system.remote.server.url");
+		baseUrl = SvcUtils.getProperties("system.remote.server.url");
 		// 서비스 목록 갖고 옴.
 		List<String> serviceList = new ArrayList<String>();
 		String uri = baseUrl+"/services/jdftest/get_list/";
-		GetTestListOut dvoList = JsonUtil.request(uri, MethodType.GET, GetTestListOut.class);
+		GetTestListOut dvoList = JsonUtils.request(uri, MethodType.GET, GetTestListOut.class);
 		testInfoList = dvoList.getList();
 		for (TestInfo dvo : testInfoList) {
 			serviceList.add(dvo.getName());
@@ -108,13 +108,13 @@ public class PerformanceMain {
 		
 		String uri = baseUrl+"/services/jdftest/run/";
 		// TODO : Thead 수 만큼 호출 
-		RunTestOut testResult = JsonUtil.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
-		List<TestResultDVO> testList = testResult.getResultDVOList();
+		RunTestOut testResult = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
+		List<TestResult> testList = testResult.getResultDVOList();
 		tvResult.getItems().clear();
 		tvResult.setItems(FXCollections.observableArrayList(testList));
 		
 		// 결과값 저장 1. JSON , 2. XML
-		SvcUtil.makeJsonFile(new ObjectMapper().writeValueAsString(testResult));
+		SvcUtils.makeJsonFile(new ObjectMapper().writeValueAsString(testResult));
 //		SvcUtil.makeResultXMLFile(testResult);
 		
 	}
@@ -140,12 +140,12 @@ public class PerformanceMain {
 		configsDVO.setResponseTimeout(Long.parseLong(txtResTimeout.getText()));
 		configsDVO.setTargetUrl(txtUrl.getText());
 		String uri = baseUrl+"/services/jdftest/set_configs/";
-		return JsonUtil.request(uri, MethodType.POST, mapper.writeValueAsString(configsDVO), SetTestConfigsOut.class);
+		return JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(configsDVO), SetTestConfigsOut.class);
 	}
 
 	private void getConfigs() throws Exception {
 		String uri = baseUrl+"/services/jdftest/get_configs/";
-		GetTestConfigsOut outDVO = JsonUtil.request(uri, MethodType.GET, GetTestConfigsOut.class);
+		GetTestConfigsOut outDVO = JsonUtils.request(uri, MethodType.GET, GetTestConfigsOut.class);
 		txtConTimeout.setText(Long.toString(outDVO.getConnectionTimeout()));
 		txtResTimeout.setText(Long.toString(outDVO.getResponseTimeout()));
 		txtThrNo.setText(Integer.toString(outDVO.getNumberOfThreads()));

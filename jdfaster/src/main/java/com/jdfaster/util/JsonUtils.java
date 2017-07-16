@@ -8,7 +8,7 @@ import org.apache.http.client.fluent.Response;
 import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class JsonUtil {
+public class JsonUtils {
 	public enum MethodType {
 		POST("POST"), GET("GET"), DELETE("DELETE"), PUT("PUT");
 		private String span;

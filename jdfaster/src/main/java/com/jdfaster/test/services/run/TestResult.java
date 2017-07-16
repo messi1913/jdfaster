@@ -3,7 +3,7 @@ package com.jdfaster.test.services.run;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TestResultDVO {
+public class TestResult {
 	private StringProperty methodName;
 	private StringProperty threadName;
 	private StringProperty startTime;
@@ -11,7 +11,7 @@ public class TestResultDVO {
 	private StringProperty status;
 	private StringProperty connectionTime;
 
-	public TestResultDVO() {
+	public TestResult() {
 		this.methodName = new SimpleStringProperty();
 		this.threadName = new SimpleStringProperty();
 		this.startTime = new SimpleStringProperty();

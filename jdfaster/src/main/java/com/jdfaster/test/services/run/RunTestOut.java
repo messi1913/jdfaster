@@ -4,14 +4,14 @@ import java.util.List;
 
 public class RunTestOut {
 
-	private List<TestResultDVO> resultDVOList;
+	private List<TestResult> testResultList;
 
-	public List<TestResultDVO> getResultDVOList() {
-		return resultDVOList;
+	public List<TestResult> getResultDVOList() {
+		return testResultList;
 	}
 
-	public void setResultDVOList(List<TestResultDVO> resultDVOList) {
-		this.resultDVOList = resultDVOList;
+	public void setResultDVOList(List<TestResult> resultDVOList) {
+		this.testResultList = resultDVOList;
 	}
 	
 }
