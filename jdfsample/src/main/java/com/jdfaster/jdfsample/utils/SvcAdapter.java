@@ -32,9 +32,9 @@ public class SvcAdapter extends DefaultServiceAdapter implements ServiceAdapter 
 
 	@Override
 	public Object invoke(ProceedingJoinPoint point) throws Throwable {
-		Test test = TestUtils.getCurrentTest();
-		if (test == null)
-			throw new IllegalArgumentException("Cannot find Current Test!");
+//		Test test = TestUtils.getCurrentTest();
+//		if (test == null)
+//			throw new IllegalArgumentException("Cannot find Current Test!");
 
 		Signature signature = point.getSignature();
 		Object[] args = point.getArgs();

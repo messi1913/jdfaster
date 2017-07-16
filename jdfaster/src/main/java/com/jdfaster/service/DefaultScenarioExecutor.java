@@ -51,17 +51,30 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 				if (method == null)
 					throw new NoSuchMethodError(name);
 
+				int paramSize = method.getParameterCount();
+
 				// 메서드의 파라미터 유형 클래스를 담음.
 				List<Object> argList = target.getArgs();
-				args = argList.toArray(new Object[argList.size()]);
-				// 클래스명 을 통해서 bean 을 갖고옴.
-				String beanName = StringUtils.uncapitalize(clazz.getSimpleName());
-				try {
-					bean = applicationContext.getBean(beanName);
-				} catch (NoSuchBeanDefinitionException e) {
-					beanName = null;
-					bean = applicationContext.getBean(clazz);
+				args = new Object[paramSize];
+				if (paramSize != 0) {
+					int argSize = argList == null ? 0 : argList.size();
+					for (int i = 0; i < paramSize; i++) {
+						args[i] = argSize > i ? argList.get(i) : null;
+					}
 				}
+				//TODO : 클래스명 을 통해서 bean 을 갖고옴.
+				bean = clazz.newInstance();
+//				String beanName = StringUtils.uncapitalize(clazz.getSimpleName());
+				// try {
+				// bean = applicationContext.getBean(beanName);
+				// } catch (NoSuchBeanDefinitionException e) {
+				// try {
+				// beanName = null;
+				// bean = applicationContext.getBean(clazz);
+				// } catch (NoSuchBeanDefinitionException e1) {
+				// bean = clazz.newInstance();
+				// }
+				// }
 				// Class Bean, method, parameter 를 BeanInfo 클래스에 저장.
 				BeanInfo beanInfo = new BeanInfo();
 				beanInfo.setBean(bean);

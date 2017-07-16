@@ -94,27 +94,31 @@ public class PerformanceMain {
 
 	@FXML
 	public void btnRunOnMouseClicked(MouseEvent event) throws Exception {
-		SetTestConfigsOut setConfigs = setConfigs();
-		
 		testDVO = new RunTestIn();
-		testDVO.setTargetUrl(txtUrl.getText());
 		String scenarioName = cmbScenario.getSelectionModel().getSelectedItem();
 		for(TestInfo info : testInfoList) {
 			if(scenarioName.equals(info.getName())) {
 				testDVO.setTestInfo(info);
+				testDVO.setTargetUrl(txtUrl.getText()+info.getUrl());
 				break;
 			}
 		}
 		
+		testDVO.setConnectionTimeout(Long.parseLong(txtConTimeout.getText()));
+		testDVO.setResponseTimeout(Long.parseLong(txtResTimeout.getText()));
+		testDVO.setNumberOfThreads(Integer.parseInt(txtThrNo.getText()));
+		
+		
 		String uri = baseUrl+"/services/jdftest/run/";
 		// TODO : Thead 수 만큼 호출 
 		RunTestOut testResult = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
-		List<TestResult> testList = testResult.getResultDVOList();
-		tvResult.getItems().clear();
-		tvResult.setItems(FXCollections.observableArrayList(testList));
-		
-		// 결과값 저장 1. JSON , 2. XML
-		SvcUtils.makeJsonFile(new ObjectMapper().writeValueAsString(testResult));
+//		if(testResult == null) return;
+//		List<TestResult> testList = testResult.getResultDVOList();
+//		tvResult.getItems().clear();
+//		tvResult.setItems(FXCollections.observableArrayList(testList));
+//		
+//		// 결과값 저장 1. JSON , 2. XML
+//		SvcUtils.makeJsonFile(new ObjectMapper().writeValueAsString(testResult));
 //		SvcUtil.makeResultXMLFile(testResult);
 		
 	}
