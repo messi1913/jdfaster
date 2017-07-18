@@ -26,6 +26,12 @@
 		</plugins>
 	</build>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<vaadin.version>8.0.6</vaadin.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -72,13 +78,25 @@
 			<artifactId>fluent-hc</artifactId>
 			<version>4.5.3</version>
 		</dependency>
-		<!-- Add Vaading UI Framework -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.vaadin</groupId> -->
-<!-- 		    <artifactId>vaadin-spring-boot-starter</artifactId> -->
-<!-- 		</dependency> -->
-
+		<!-- https://mvnrepository.com/artifact/com.vaadin/vaadin-spring-boot-starter -->
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-spring-boot-starter</artifactId>
+		</dependency>
+		
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-bom</artifactId>
+				<version>${vaadin.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 
 	<repositories>
