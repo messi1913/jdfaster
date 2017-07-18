@@ -16,8 +16,8 @@ import com.jdfaster.jdfsample.services.test.scen01.TestScen01Out;
 import com.jdfaster.test.TestScenario;
 
 @Transactional(propagation = Propagation.SUPPORTS)
-@RestController
 @RequestMapping("/services/test/")
+@RestController
 public class TestServices {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/md/")

@@ -17,7 +17,6 @@ import com.jdfaster.util.JsonUtils;
 import com.jdfaster.util.JsonUtils.MethodType;
 import com.jdfaster.util.SvcUtils;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -93,7 +92,7 @@ public class PerformanceMain {
 	}
 
 	@FXML
-	public void btnRunOnMouseClicked(MouseEvent event) throws Exception {
+	public void btnRunOnMouseClicked(MouseEvent event) throws Exception {	
 		testDVO = new RunTestIn();
 		String scenarioName = cmbScenario.getSelectionModel().getSelectedItem();
 		for(TestInfo info : testInfoList) {

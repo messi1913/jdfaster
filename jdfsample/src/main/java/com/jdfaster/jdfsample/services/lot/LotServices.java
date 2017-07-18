@@ -88,5 +88,4 @@ public class LotServices {
 	public ShipLotOut ship(@RequestBody ShipLotIn input) throws Exception {
 		return new ShipLot().ship(input);
 	}
-
 }

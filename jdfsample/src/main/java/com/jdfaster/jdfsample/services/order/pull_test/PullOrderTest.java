@@ -29,6 +29,6 @@ public class PullOrderTest {
 
 		// MesOrder order = em.find(MesOrder.class, testStatus.getOrderId());
 		output.setOrderId(testStatus.getOrderId());
-		return null;
+		return output;
 	}
 }

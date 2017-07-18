@@ -24,7 +24,9 @@ public class GetLotIdList {
 				lotList = reqOut.getList();
 			}
 
-			for (int i = 0; i < 10; i++)
+//			for (int i = 0; i < 10; i++)
+			int limtSizeOfList =  (lotList.size()<10) ? lotList.size() : 10; 
+			for(int i = 0; i < limtSizeOfList; i++)
 				list.add(lotList.get(i).getLotId());
 		}
 
