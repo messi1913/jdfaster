@@ -1,6 +1,5 @@
 package com.jdfaster.jdfsample.services.test;
 
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +14,9 @@ import com.jdfaster.jdfsample.services.test.scen01.TestScen01In;
 import com.jdfaster.jdfsample.services.test.scen01.TestScen01Out;
 import com.jdfaster.test.TestScenario;
 
-@Transactional(propagation = Propagation.SUPPORTS)
-@RequestMapping("/services/test/")
 @RestController
+@RequestMapping("/services/test/")
+@Transactional
 public class TestServices {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/md/")
