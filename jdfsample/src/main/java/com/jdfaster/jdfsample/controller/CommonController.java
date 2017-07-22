@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommonController implements ApplicationContextAware {
 	@Autowired
 	private EntityManager em;
+	
 	public EntityManager getEm() {
 		return em;
 	}

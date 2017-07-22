@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jdfaster.jdfsample.controller.CommonController;
+import com.jdfaster.service.LoadController;
 
 public class SvcUtils {
 	@Transactional
