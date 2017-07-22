@@ -9,17 +9,30 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jdfaster.service.LoadController;
+
 @Controller
 @Transactional
 public class CommonController implements ApplicationContextAware {
 	@Autowired
 	private EntityManager em;
+	@Autowired
+	private LoadController lc;
+	
 	public EntityManager getEm() {
 		return em;
 	}
 
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+	
+	public LoadController getLc() {
+		return lc;
+	}
+	
+	public void setLc(LoadController lc) {
+		this.lc = lc;
 	}
 
 	private static ApplicationContext ac;

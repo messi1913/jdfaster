@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jdfaster.jdfsample.controller.CommonController;
+import com.jdfaster.service.LoadController;
 
 public class SvcUtils {
 	@Transactional
 	public static EntityManager getEm() throws Exception {
 		EntityManager em = getBean(CommonController.class).getEm();
 		return em;
+	}
+	public static LoadController getLc() throws Exception {
+		return getBean(CommonController.class).getLc();
 	}
 
 	public static <T> T getBean(Class<T> type) throws Exception {
