@@ -22,9 +22,6 @@ public class SvcUtils {
 		EntityManager em = getBean(CommonController.class).getEm();
 		return em;
 	}
-	public static LoadController getLc() throws Exception {
-		return getBean(CommonController.class).getLc();
-	}
 
 	public static <T> T getBean(Class<T> type) throws Exception {
 		return CommonController.getApplicationContext().getBean(type);
