@@ -1,13 +1,18 @@
 package com.jdfaster.view.main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.jdfaster.test.services.get_configs.GetTestConfigsOut;
 import com.jdfaster.test.services.get_list.GetTestListOut;
 import com.jdfaster.test.services.get_list.GetTestListOut.TestInfo;
+import com.jdfaster.test.services.get_result.GetTestResultIn;
+import com.jdfaster.test.services.get_result.GetTestResultOut;
 import com.jdfaster.test.services.run.RunTestIn;
 import com.jdfaster.test.services.run.RunTestOut;
 import com.jdfaster.test.services.run.TestResult;
@@ -17,6 +22,7 @@ import com.jdfaster.util.JsonUtils;
 import com.jdfaster.util.JsonUtils.MethodType;
 import com.jdfaster.util.SvcUtils;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -46,6 +52,7 @@ public class PerformanceMain {
 	private RunTestIn testDVO;
 	private List<TestInfo> testInfoList;
 	private String baseUrl;
+	private boolean isGoing;
 
 	private static final ObjectMapper mapper;
 	static {
@@ -98,7 +105,7 @@ public class PerformanceMain {
 		for(TestInfo info : testInfoList) {
 			if(scenarioName.equals(info.getName())) {
 				testDVO.setTestInfo(info);
-				testDVO.setTargetUrl(txtUrl.getText()+info.getUrl());
+				testDVO.setTargetUrl(txtUrl.getText());
 				break;
 			}
 		}
@@ -110,6 +117,7 @@ public class PerformanceMain {
 		
 		String uri = baseUrl+"/services/jdftest/run/";
 		// TODO : Thead 수 만큼 호출 
+		isGoing = true;
 		RunTestOut testResult = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
 //		if(testResult == null) return;
 //		List<TestResult> testList = testResult.getResultDVOList();
@@ -121,19 +129,46 @@ public class PerformanceMain {
 //		SvcUtil.makeResultXMLFile(testResult);
 		
 	}
+	
+	@FXML
+	public void btnSopOnMouseClicked(MouseEvent event) throws Exception {	
+		String uri = baseUrl+"/services/jdftest/s/";
+		RunTestOut testResult = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
+//		if(testResult == null) return;
+	}
 
 	@FXML
-	public void btnClearOnMouseClicked(MouseEvent event) {
-		txtConTimeout.setText("");
-		txtResTimeout.setText("");
-		txtThrNo.setText("");
-		txtUrl.setText("");
+	public void btnClearOnMouseClicked(MouseEvent event) throws Exception {
+//		txtConTimeout.setText("");
+//		txtResTimeout.setText("");
+//		txtThrNo.setText("");
+//		txtUrl.setText("");
+		String uri = baseUrl+"/services/jdftest/get_result/";
+		GetTestResultIn resultIn = new GetTestResultIn();
+//		while(isGoing) {
+			GetTestResultOut request = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(resultIn), GetTestResultOut.class);
+			Thread.sleep(1000);
+//		}
+//			ArrayList<TestResult> testList = new ArrayList<TestResult>();
+			com.jdfaster.test.TestResult result = request.getResult();
+			System.out.println(result.getName());
+			System.out.println(result.getList());
+			
+//			testList.add(request.getResult());
+			
+//			tvResult.getItems().clear();
+//			tvResult.setItems(FXCollections.observableArrayList(result.getList()));
+		
 
 	}
 
 	@FXML
 	public void btnRetrieveOnMouseClicked(MouseEvent event) throws Exception {
-		getConfigs();
+//		getConfigs();
+		String uri = baseUrl+"/services/jdftest/stop/";
+		if(testDVO == null) testDVO = new RunTestIn();
+		RunTestOut testResult = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
+		isGoing = false;
 	}
 
 	private SetTestConfigsOut setConfigs() throws Exception {

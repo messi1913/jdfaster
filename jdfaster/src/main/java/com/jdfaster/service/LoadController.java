@@ -9,7 +9,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LoadController {
 	private static final Logger logger = LoggerFactory.getLogger(LoadController.class);
 

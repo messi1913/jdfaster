@@ -1,5 +1,6 @@
 package com.jdfaster.test.services;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import com.jdfaster.test.services.get_configs.GetTestConfigsOut;
 import com.jdfaster.test.services.get_list.GetTestList;
 import com.jdfaster.test.services.get_list.GetTestListIn;
 import com.jdfaster.test.services.get_list.GetTestListOut;
+import com.jdfaster.test.services.get_result.GetTestResult;
+import com.jdfaster.test.services.get_result.GetTestResultIn;
+import com.jdfaster.test.services.get_result.GetTestResultOut;
 import com.jdfaster.test.services.run.RunTest;
 import com.jdfaster.test.services.run.RunTestIn;
 import com.jdfaster.test.services.run.RunTestOut;
@@ -27,8 +31,8 @@ import com.jdfaster.test.services.set_configs.SetTestConfigsOut;
 public class TestServices {
 	@Autowired
 	private ServletContext context;
-	@Autowired
-	private LoadController lc;
+//	@Autowired
+	@Resource private LoadController lc;
 
 	 @RequestMapping(method = RequestMethod.GET, path = "/get_configs/")
 	 public GetTestConfigsOut getConfigs() throws Exception {
@@ -55,11 +59,11 @@ public class TestServices {
 		return new RunTest().stop(lc, input);
 	}
 
-	// @RequestMapping(method = RequestMethod.GET, path = "/get_result/")
-	// public GetTestResultOut getResult(GetTestResultIn input) throws Exception
-	// {
-	// return new GetTestResult().getResult(input);
-	// }
+	 @RequestMapping(method = RequestMethod.GET, path = "/get_result/")
+	 public GetTestResultOut getResult(GetTestResultIn input) throws Exception
+	 {
+		 return new GetTestResult().getResult(input);
+	 }
 	//
 	// @RequestMapping(method = RequestMethod.POST, path = "/save_result/")
 	// public SaveTestResultOut saveResult(SaveTestResultIn input) throws
