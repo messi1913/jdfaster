@@ -10,6 +10,7 @@ import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdListIn;
 import com.jdfaster.jdfsample.services.lot.get_id_list.GetLotIdListOut;
 import com.jdfaster.jdfsample.services.lot.pack.PackLotIn;
 import com.jdfaster.jdfsample.services.lot.ship.ShipLotIn;
+import com.jdfaster.jdfsample.services.test.TestServices;
 import com.jdfaster.jdfsample.services.test.utils.MesTestUtils;
 import com.jdfaster.jdfsample.utils.SvcUtils;
 
@@ -28,6 +29,8 @@ public class TestScen01 {
 	}
 
 	private void test(String lineCode) throws Exception {
+		// MD 데이터 넣기.
+//		SvcUtils.getBean(TestServices.class).md();
 		
 		String orderId = MesTestUtils.getOrderId(getClass().getSimpleName(), lineCode, "M-GS8");
 		String lotId;
