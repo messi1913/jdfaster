@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.ClassUtils;
+
+import com.jdfaster.test.Test;
+import com.jdfaster.test.TestUtils;
 
 import net.sf.common.util.Closure;
 import net.sf.common.util.SyncCtrlUtils;
@@ -62,9 +63,10 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 						args[i] = argSize > i ? argList.get(i) : null;
 					}
 				}
-				//TODO : 클래스명 을 통해서 bean 을 갖고옴.
+				// TODO : 클래스명 을 통해서 bean 을 갖고옴.
 				bean = clazz.newInstance();
-//				String beanName = StringUtils.uncapitalize(clazz.getSimpleName());
+				// String beanName =
+				// StringUtils.uncapitalize(clazz.getSimpleName());
 				// try {
 				// bean = applicationContext.getBean(beanName);
 				// } catch (NoSuchBeanDefinitionException e) {
@@ -78,17 +80,32 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 				// Class Bean, method, parameter 를 BeanInfo 클래스에 저장.
 				BeanInfo beanInfo = new BeanInfo();
 				beanInfo.setBean(bean);
+				beanInfo.setClazz(clazz);
 				beanInfo.setMethod(method);
 				beanInfo.setArgs(args);
 				return beanInfo;
 			}
 		});
+
 		// 호출 고
-		beanInfo.getMethod().invoke(beanInfo.getBean(), beanInfo.getArgs());
+		{
+			Test test = new Test();
+			test.setClazz(beanInfo.getClazz());
+			test.setMethod(beanInfo.getMethod());
+			test.setArgs(beanInfo.getArgs());
+
+			TestUtils.run(test, new Closure<Object, Exception>() {
+				@Override
+				public Object execute() throws Exception {
+					return beanInfo.getMethod().invoke(beanInfo.getBean(), beanInfo.getArgs());
+				}
+			});
+		}
 	}
 
 	private static class BeanInfo {
 		private Object bean;
+		private Class<?> clazz;
 		private Method method;
 		private Object[] args;
 
@@ -98,6 +115,14 @@ public class DefaultScenarioExecutor implements ApplicationContextAware, Scenari
 
 		public Object getBean() {
 			return bean;
+		}
+
+		public Class<?> getClazz() {
+			return clazz;
+		}
+
+		public void setClazz(Class<?> clazz) {
+			this.clazz = clazz;
 		}
 
 		public Method getMethod() {

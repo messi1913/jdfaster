@@ -2,6 +2,7 @@ package com.jdfaster.test;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Date;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -84,16 +85,54 @@ public class TestAspect implements InitializingBean {
 			}
 		}
 
+		Test test = TestUtils.getCurrentTest();
+		if (test == null) {
+			return point.proceed();
+		}
+
 		// 테스트 중에 서비스 호출인 경우, 원격지로 호출
 		ServiceAdapter adapter = serviceClassifier.getAdapter(signature, args);
 		String id = serviceClassifier.getName(signature, args);
-		// TODO 성능 측정
-		// Total별 성능
-		// Service별 성능
+		// 성능 측정
+		long startTime = new Date().getTime();
+		long elapsedTime;
 		try {
 			return adapter.invoke(point);
 		} catch (Throwable t) {
 			throw t;
+		} finally {
+			elapsedTime = new Date().getTime() - startTime;
+
+			// Total 성능
+			TestResult result = test.getResult();
+			// Service별 성능
+			TestResult svcResult;
+
+			synchronized (result) {
+				result.setTotalRunSize(result.getTotalRunSize() + 1);
+				result.setTotalRunTime(result.getTotalRunTime() + elapsedTime);
+				result.setMinRunTime(
+						result.getMinRunTime() == 0 ? elapsedTime : Math.min(elapsedTime, result.getMinRunTime()));
+				result.setMaxRunTime(
+						result.getMaxRunTime() == 0 ? elapsedTime : Math.max(elapsedTime, result.getMaxRunTime()));
+
+				if (result.results.containsKey(id)) {
+					svcResult = result.results.get(id);
+				} else {
+					svcResult = new TestResult();
+					svcResult.setName(id);
+					result.results.put(id, svcResult);
+				}
+			}
+
+			synchronized (svcResult) {
+				svcResult.setTotalRunSize(svcResult.getTotalRunSize() + 1);
+				svcResult.setTotalRunTime(svcResult.getTotalRunTime() + elapsedTime);
+				svcResult.setMinRunTime(svcResult.getMinRunTime() == 0 ? elapsedTime
+						: Math.min(elapsedTime, svcResult.getMinRunTime()));
+				svcResult.setMaxRunTime(svcResult.getMaxRunTime() == 0 ? elapsedTime
+						: Math.max(elapsedTime, svcResult.getMaxRunTime()));
+			}
 		}
 	}
 }

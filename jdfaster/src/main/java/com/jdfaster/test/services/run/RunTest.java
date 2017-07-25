@@ -9,9 +9,10 @@ import com.jdfaster.service.LoadController;
 import com.jdfaster.service.Target;
 import com.jdfaster.test.TestConfigs;
 import com.jdfaster.test.services.get_list.GetTestListOut.TestInfo;
+import com.jdfaster.util.SvcUtils;
 
 public class RunTest {
-	public RunTestOut run(ServletContext context, RunTestIn input) throws Exception {
+	public RunTestOut run(ServletContext context, LoadController lc, RunTestIn input) throws Exception {
 		// 시나리오 정
 		TestInfo testInfo = input.getTestInfo();
 		
@@ -24,7 +25,6 @@ public class RunTest {
 
 		// TODO Run
 		// 로드 컨트롤 호출??
-		LoadController lc = new LoadController();
 		List<Target> targets = new ArrayList<Target>();
 		Target target = new Target();
 		target.setName(testInfo.getClassName() + "." + testInfo.getMethodName());
@@ -34,6 +34,12 @@ public class RunTest {
 		lc.start(Math.toIntExact(configs.getNumberOfThreads()), targets);
 
 		//
+		RunTestOut output = new RunTestOut();
+		return output;
+	}
+	
+	public RunTestOut stop(LoadController lc, RunTestIn input) throws Exception {
+		lc.stop();
 		RunTestOut output = new RunTestOut();
 		return output;
 	}

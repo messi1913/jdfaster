@@ -13,7 +13,7 @@ public class TestUtils {
 		return props.containsKey(tid);
 	}
 
-	public static Object run(Test test, Closure<Object, Throwable> closure) throws Throwable {
+	public static <T extends Throwable> Object run(Test test, Closure<Object, T> closure) throws T {
 		Long tid = Thread.currentThread().getId();
 		props.put(tid, test);
 		try {
