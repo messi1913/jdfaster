@@ -1,7 +1,6 @@
 package com.jdfaster.view.vaadin;
 
 import com.jdfaster.view.MainScreen;
-import com.jdfaster.view.menu.LoadingDataGenerator;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
