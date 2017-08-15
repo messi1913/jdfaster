@@ -18,6 +18,7 @@ public class Application extends UI {
 		super.setContent(new MainScreen(this));
 		// 현재 요청된 주소(Loaction) 값에 맞게 뷰를 동적으로 전환 
 		super.getNavigator().navigateTo(super.getNavigator().getState());
+	
 		return;
 	}
 
