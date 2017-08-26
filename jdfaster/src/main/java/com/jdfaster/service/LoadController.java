@@ -100,15 +100,17 @@ public class LoadController {
 				taskExecutor.execute(new Runnable() {
 					@Override
 					public void run() {
-						try {
-							synchronized (counter) {
-								Long cnt = counter.get(0);
-								counter.set(0, cnt + 1);
+						while ("started".equals(status) || "starting".equals(status)) {
+							try {
+								synchronized (counter) {
+									Long cnt = counter.get(0);
+									counter.set(0, cnt + 1);
+								}
+								Target target = tgs.get(n == 0 ? 0 : r.nextInt(n));
+								scenarioExecutor.execute(target);
+							} catch (Exception e) {
+								logger.error(e.getMessage(), e);
 							}
-							Target target = tgs.get(n==0 ? 0 : r.nextInt(n));
-							scenarioExecutor.execute(target);
-						} catch (Exception e) {
-							logger.error(e.getMessage(), e);
 						}
 					}
 				});
