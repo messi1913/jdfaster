@@ -11,8 +11,6 @@ import org.springframework.beans.factory.InitializingBean;
 import com.jdfaster.service.ServiceAdapter;
 import com.jdfaster.service.ServiceClassifier;
 
-import net.sf.common.util.Closure;
-
 public class TestAspect implements InitializingBean {
 	private ServiceClassifier serviceClassifier;
 
@@ -64,25 +62,26 @@ public class TestAspect implements InitializingBean {
 		}
 
 		// 테스트 클래스인 경우
-		if (testClass) {
-			if (ongoing)
-				return point.proceed();
-
-			// 테스트
-			{
-				Test test = new Test();
-				test.setClazz(clazz);
-				test.setMethod(method);
-				test.setArgs(args);
-
-				TestUtils.run(test, new Closure<Object, Throwable>() {
-					@Override
-					public Object execute() throws Throwable {
-						return point.proceed();
-					}
-				});
-			}
-		}
+		// if (testClass) {
+		// // 테스트 안에서 테스트를 실행한 경우
+		// if (ongoing)
+		// return point.proceed();
+		//
+		// // 테스트
+		// {
+		// Test test = new Test();
+		// test.setClazz(clazz);
+		// test.setMethod(method);
+		// test.setArgs(args);
+		//
+		// return TestUtils.run(test, new Closure<Object, Throwable>() {
+		// @Override
+		// public Object execute() throws Throwable {
+		// return point.proceed();
+		// }
+		// });
+		// }
+		// }
 
 		Test test = TestUtils.getCurrentTest();
 		if (test == null) {
@@ -103,7 +102,7 @@ public class TestAspect implements InitializingBean {
 			elapsedTime = new Date().getTime() - startTime;
 
 			// Total 성능
-			TestResult result = test.getResult();
+			TestResult result = TestUtils.getResult();
 			// Service별 성능
 			TestResult svcResult;
 
@@ -122,16 +121,13 @@ public class TestAspect implements InitializingBean {
 					svcResult.setName(id);
 					result.results.put(id, svcResult);
 				}
-			}
 
-			synchronized (svcResult) {
 				svcResult.setTotalRunSize(svcResult.getTotalRunSize() + 1);
 				svcResult.setTotalRunTime(svcResult.getTotalRunTime() + elapsedTime);
 				svcResult.setMinRunTime(svcResult.getMinRunTime() == 0 ? elapsedTime
 						: Math.min(elapsedTime, svcResult.getMinRunTime()));
 				svcResult.setMaxRunTime(svcResult.getMaxRunTime() == 0 ? elapsedTime
 						: Math.max(elapsedTime, svcResult.getMaxRunTime()));
-
 			}
 		}
 	}

@@ -6,7 +6,6 @@ public class Test {
 	private Class<?> clazz;
 	private Method method;
 	private Object[] args = new Object[0];
-	private TestResult result;
 
 	public Class<?> getClazz() {
 		return clazz;
@@ -30,21 +29,5 @@ public class Test {
 
 	public void setArgs(Object[] args) {
 		this.args = args;
-	}
-
-	public TestResult getResult() {
-		if (result == null) {
-			synchronized (this) {
-				if (result == null) {
-					result = new TestResult();
-					result.setName(clazz.getSimpleName() + "." + method.getName());
-				}
-			}
-		}
-		return result;
-	}
-
-	public void setResult(TestResult result) {
-		this.result = result;
 	}
 }
