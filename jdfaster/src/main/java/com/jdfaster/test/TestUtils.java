@@ -27,4 +27,13 @@ public class TestUtils {
 		Long tid = Thread.currentThread().getId();
 		return props.get(tid);
 	}
+	
+	public static Map<Long, Test> getAllTest() {
+		return props;
+	}
+	
+	
+	public static void removeAllTest() {
+		props.clear();
+	}
 }

@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TestResult {
+	private long thId;
 	private String name;
 	private long minRunTime;
 	private long maxRunTime;
@@ -68,4 +69,20 @@ public class TestResult {
 		List<TestResult> list = new ArrayList<>(results.values());
 		return list;
 	}
+	public long getThId() {
+		return thId;
+	}
+
+	public void setThId(long thId) {
+		this.thId = thId;
+	}
+
+	@Override
+	public String toString() {
+		return "TestResult [name=" + name + ", minRunTime=" + minRunTime + ", maxRunTime=" + maxRunTime
+				+ ", avgRunTime=" + avgRunTime + ", totalRunSize=" + totalRunSize + ", totalRunTime=" + totalRunTime
+				+ ", results=" + results.size() + "]";
+	}
+	
+	
 }

@@ -75,13 +75,12 @@ public class TestAspect implements InitializingBean {
 				test.setMethod(method);
 				test.setArgs(args);
 
-				Object result = TestUtils.run(test, new Closure<Object, Throwable>() {
+				TestUtils.run(test, new Closure<Object, Throwable>() {
 					@Override
 					public Object execute() throws Throwable {
 						return point.proceed();
 					}
 				});
-				return result;
 			}
 		}
 
@@ -132,6 +131,7 @@ public class TestAspect implements InitializingBean {
 						: Math.min(elapsedTime, svcResult.getMinRunTime()));
 				svcResult.setMaxRunTime(svcResult.getMaxRunTime() == 0 ? elapsedTime
 						: Math.max(elapsedTime, svcResult.getMaxRunTime()));
+
 			}
 		}
 	}

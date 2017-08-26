@@ -1,6 +1,8 @@
 package com.jdfaster.view;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -14,17 +16,20 @@ import com.jdfaster.test.services.run.RunTestOut;
 import com.jdfaster.util.JsonUtils;
 import com.jdfaster.util.JsonUtils.MethodType;
 import com.jdfaster.view.data.ScTestInfo;
+import com.jdfaster.view.data.ScTestResult;
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToLongConverter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
+import com.vaadin.shared.ui.grid.ColumnResizeMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -37,7 +42,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
 public class DashBoardView extends VerticalLayout implements View {
-
+	
 	private UI ui;
 	public static final String VIEW_NAME = "";
 	TextField txtUrl, txtResTimeout, txtThrNo, txtConTimeout, txtAvgRunTime, txtMinRunTime, txtMaxRunTime, txtTotalRunSize, txtTotalRunTime;
@@ -52,6 +57,8 @@ public class DashBoardView extends VerticalLayout implements View {
 	RunTestIn testDVO;
 	String baseURL;
 	TestResult testResult;
+	Grid<ScTestResult> grdResult; 
+	List<ScTestResult> testResultList;
 
 	private List<TestInfo> testInfoList;
 
@@ -70,6 +77,52 @@ public class DashBoardView extends VerticalLayout implements View {
 		this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 		bar.setEnabled(false);
 		bar.setVisible(false);
+		
+
+		
+		new Thread() {
+			public void run(){
+				while(true) {
+					try {
+						if(!isOnGoing) return;
+						
+						Map<Long, Test> allTest = TestUtils.getAllTest();
+						if(allTest.isEmpty()) {
+							continue;
+						}
+						for(Long key : allTest.keySet()) {
+							Test test = allTest.get(key);		
+							if(test == null) {
+								continue;
+							}
+//							System.out.println(test.getResult());
+//							ui.access( () -> {
+								
+								testResult = test.getResult();
+								testResult.setThId(key);
+//								System.out.println(testResult);
+//								List<TestResult> list = testResult.getList();
+//								txtAvgRunTime.setValue(Long.toString(testResult.getAvgRunTime()));
+//								txtMaxRunTime.setValue(Long.toString(testResult.getMaxRunTime()));
+//								txtUrl.setValue(testResult.getName());
+//								
+//							});
+							
+//							if(list == null || list.size() <= 0) {
+//								continue;
+//							}
+//							System.out.println(testResult.getAvgRunTime());
+						}
+							
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+						bar.setVisible(false);
+						System.err.println("Failed");
+					}
+				}
+			};
+		}.start();
 	}
 
 	@Override
@@ -152,6 +205,12 @@ public class DashBoardView extends VerticalLayout implements View {
 			scTestInfo.setMethodName(event.getValue().getMethodName());
 			scTestInfo.setName(event.getValue().getName());
 		});
+		// 기본 설정 테스트 빨리 하기 위해서 
+//		scenarios.setValue(testInfoList.get(0));
+		txtUrl.setValue("http://localhost:8080");
+		txtThrNo.setValue("1");
+		txtConTimeout.setValue("1000");
+		txtResTimeout.setValue("1000");
 	}
 
 	private Component createContents() {
@@ -195,6 +254,7 @@ public class DashBoardView extends VerticalLayout implements View {
 					bar.setEnabled(true);
 					bar.setVisible(true);
 					bar.setIndeterminate(true);
+					isOnGoing = true;
 					new Thread() {
 						public void run(){
 //							while(true) {
@@ -222,6 +282,12 @@ public class DashBoardView extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				isOnGoing = false;
+				String uri = baseURL+"/services/jdftest/stop/";
+				try {
+					JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO), RunTestOut.class);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				bar.setVisible(false);
 				Notification.show("STOP!!");
 			}
@@ -231,9 +297,28 @@ public class DashBoardView extends VerticalLayout implements View {
 		btnSave.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Test test = TestUtils.getCurrentTest();
-				testResult = test.getResult();
-//				txtAvgRunTime.setValue(value);
+				txtAvgRunTime.setValue(Long.toString(testResult.getAvgRunTime()));
+				txtMaxRunTime.setValue(Long.toString(testResult.getMaxRunTime()));
+				txtMinRunTime.setValue(Long.toString(testResult.getMinRunTime()));
+				txtTotalRunSize.setValue(Long.toString(testResult.getTotalRunSize()));
+				txtTotalRunTime.setValue(Long.toString(testResult.getTotalRunTime()));
+				
+				String thNo = Long.toString(testResult.getThId());
+				
+				testResultList.clear();
+				Map<String, TestResult> results = testResult.results;
+				for(String key : results.keySet()) {
+					TestResult tr = results.get(key);
+					ScTestResult result = new ScTestResult();
+					result.setThreadNo(thNo);
+					result.setServiceName(tr.getName());
+					result.setMaxTime(Long.toString(tr.getMaxRunTime()));
+					result.setMinTime(Long.toString(tr.getMinRunTime()));
+					result.setStatus("200 OK");
+					testResultList.add(result);
+				}
+				
+				grdResult.setItems(testResultList);
 				
 			}
 		});
@@ -262,23 +347,42 @@ public class DashBoardView extends VerticalLayout implements View {
 	}
 
 	private Component createMainResult() {
+		
+		VerticalLayout layout = new VerticalLayout();
 		HorizontalLayout result = new HorizontalLayout();
+//		HorizontalLayout result = new HorizontalLayout();
 		result.setSizeUndefined();
 		result.setSpacing(true);
 		result.setStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
 		result.setWidth(100, Unit.PERCENTAGE);
-		GridLayout grid = new GridLayout(5, 1);
-		grid.setSpacing(true);
-		grid.setSizeFull();
-		grid.setMargin(true);
-		grid.addComponent(txtAvgRunTime, 0, 0);
-		grid.addComponent(txtMinRunTime, 1, 0);
-		grid.addComponent(txtMaxRunTime, 2, 0);
-		grid.addComponent(txtTotalRunTime, 3, 0);
-		grid.addComponent(txtTotalRunSize, 4, 0);
+		GridLayout gridLayout = new GridLayout(5, 1);
+		gridLayout.setSpacing(true);
+		gridLayout.setSizeFull();
+		gridLayout.setMargin(true);
+		gridLayout.addComponent(txtAvgRunTime, 0, 0);
+		gridLayout.addComponent(txtMinRunTime, 1, 0);
+		gridLayout.addComponent(txtMaxRunTime, 2, 0);
+		gridLayout.addComponent(txtTotalRunTime, 3, 0);
+		gridLayout.addComponent(txtTotalRunSize, 4, 0);
 		
-		result.addComponent(grid);
-		return result;
+		result.addComponent(gridLayout);
+		
+		testResultList = new ArrayList<>();
+		
+		grdResult = new Grid<>();
+		grdResult.setSizeFull();
+		
+		grdResult.setItems(testResultList);
+		grdResult.addColumn(ScTestResult::getThreadNo).setCaption("Thread No").setWidthUndefined().setResizable(true);
+		grdResult.addColumn(ScTestResult::getServiceName).setCaption("Service Name").setWidthUndefined().setResizable(true);
+		grdResult.addColumn(ScTestResult::getMaxTime).setCaption("Max Run Time").setWidthUndefined().setResizable(true);
+		grdResult.addColumn(ScTestResult::getStatus).setCaption("Status").setWidthUndefined().setResizable(true);
+		
+//		grdResult.setColumnResizeMode(ColumnResizeMode.);
+//		
+		layout.addComponents(result, grdResult);
+		
+		return layout;
 	}
 
 }
