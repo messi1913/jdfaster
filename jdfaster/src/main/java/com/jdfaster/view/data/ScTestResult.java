@@ -4,19 +4,14 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class ScTestResult implements Serializable {
-	private String threadNo;
 	private String serviceName;
 	private String avgTime;
 	private String maxTime;
 	private String minTime;
+	private String totalRunSize;
+	private String totalRunTime;
 	private String status;
 	
-	public String getThreadNo() {
-		return threadNo;
-	}
-	public void setThreadNo(String threadNo) {
-		this.threadNo = threadNo;
-	}
 	public String getServiceName() {
 		return serviceName;
 	}
@@ -46,6 +41,18 @@ public class ScTestResult implements Serializable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getTotalRunSize() {
+		return totalRunSize;
+	}
+	public void setTotalRunSize(String totalRunSize) {
+		this.totalRunSize = totalRunSize;
+	}
+	public String getTotalRunTime() {
+		return totalRunTime;
+	}
+	public void setTotalRunTime(String totalRunTime) {
+		this.totalRunTime = totalRunTime;
 	}
 	
 	

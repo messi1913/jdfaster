@@ -34,7 +34,7 @@ public class PackLot {
 			// TODO
 			MesLot lot = new MesLot();
 			lot.setLotId(lotId);
-			lot = em.find(MesLot.class, lot);
+			lot = em.find(MesLot.class, lot.getLotId());
 			totalQty += lot.getLotQty();
 			lotList.add(lot);
 			lot.setpLotId(input.getLotId());

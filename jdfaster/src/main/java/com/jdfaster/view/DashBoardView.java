@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.jdfaster.test.Test;
 import com.jdfaster.test.TestResult;
 import com.jdfaster.test.TestUtils;
 import com.jdfaster.test.services.get_list.GetTestListOut;
@@ -22,7 +21,6 @@ import com.vaadin.data.converter.StringToLongConverter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
-import com.vaadin.shared.ui.grid.ColumnResizeMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -78,51 +76,7 @@ public class DashBoardView extends VerticalLayout implements View {
 		bar.setEnabled(false);
 		bar.setVisible(false);
 		
-
-		
-		new Thread() {
-			public void run(){
-				while(true) {
-					try {
-						if(!isOnGoing) return;
-						
-						Map<Long, Test> allTest = TestUtils.getAllTest();
-						if(allTest.isEmpty()) {
-							continue;
-						}
-						for(Long key : allTest.keySet()) {
-							Test test = allTest.get(key);		
-							if(test == null) {
-								continue;
-							}
-//							System.out.println(test.getResult());
-//							ui.access( () -> {
-								
-								testResult = test.getResult();
-								testResult.setThId(key);
-//								System.out.println(testResult);
-//								List<TestResult> list = testResult.getList();
-//								txtAvgRunTime.setValue(Long.toString(testResult.getAvgRunTime()));
-//								txtMaxRunTime.setValue(Long.toString(testResult.getMaxRunTime()));
-//								txtUrl.setValue(testResult.getName());
-//								
-//							});
-							
-//							if(list == null || list.size() <= 0) {
-//								continue;
-//							}
-//							System.out.println(testResult.getAvgRunTime());
-						}
-							
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-						bar.setVisible(false);
-						System.err.println("Failed");
-					}
-				}
-			};
-		}.start();
+		new TestResultThread().start();
 	}
 
 	@Override
@@ -255,23 +209,13 @@ public class DashBoardView extends VerticalLayout implements View {
 					bar.setVisible(true);
 					bar.setIndeterminate(true);
 					isOnGoing = true;
-					new Thread() {
-						public void run(){
-//							while(true) {
-								try {
-									if(!isOnGoing) return;
-									RunTestOut outDVO = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO),RunTestOut.class);
-									bar.setVisible(false);
-									System.err.println("End");
-								} catch (Exception e) {
-									e.printStackTrace();
-									bar.setVisible(false);
-									System.err.println("Failed");
-								}
-//							}
-						};
-					}.start();
+					if(!isOnGoing) return;
+					RunTestOut outDVO = JsonUtils.request(uri, MethodType.POST, mapper.writeValueAsString(testDVO),RunTestOut.class);
+					bar.setVisible(false);
+					System.err.println("End");
+
 				} catch (Exception e) {
+					bar.setVisible(false);
 					e.printStackTrace();
 				}
 			}
@@ -297,28 +241,7 @@ public class DashBoardView extends VerticalLayout implements View {
 		btnSave.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				txtAvgRunTime.setValue(Long.toString(testResult.getAvgRunTime()));
-				txtMaxRunTime.setValue(Long.toString(testResult.getMaxRunTime()));
-				txtMinRunTime.setValue(Long.toString(testResult.getMinRunTime()));
-				txtTotalRunSize.setValue(Long.toString(testResult.getTotalRunSize()));
-				txtTotalRunTime.setValue(Long.toString(testResult.getTotalRunTime()));
-				
-				String thNo = Long.toString(testResult.getThId());
-				
-				testResultList.clear();
-				Map<String, TestResult> results = testResult.results;
-				for(String key : results.keySet()) {
-					TestResult tr = results.get(key);
-					ScTestResult result = new ScTestResult();
-					result.setThreadNo(thNo);
-					result.setServiceName(tr.getName());
-					result.setMaxTime(Long.toString(tr.getMaxRunTime()));
-					result.setMinTime(Long.toString(tr.getMinRunTime()));
-					result.setStatus("200 OK");
-					testResultList.add(result);
-				}
-				
-				grdResult.setItems(testResultList);
+				//TO DO : 파일 남기
 				
 			}
 		});
@@ -373,16 +296,59 @@ public class DashBoardView extends VerticalLayout implements View {
 		grdResult.setSizeFull();
 		
 		grdResult.setItems(testResultList);
-		grdResult.addColumn(ScTestResult::getThreadNo).setCaption("Thread No").setWidthUndefined().setResizable(true);
 		grdResult.addColumn(ScTestResult::getServiceName).setCaption("Service Name").setWidthUndefined().setResizable(true);
+		grdResult.addColumn(ScTestResult::getAvgTime).setCaption("Average Run Time").setWidthUndefined();
 		grdResult.addColumn(ScTestResult::getMaxTime).setCaption("Max Run Time").setWidthUndefined().setResizable(true);
+		grdResult.addColumn(ScTestResult::getMinTime).setCaption("Min Run Time");
+		grdResult.addColumn(ScTestResult::getTotalRunTime).setCaption("Total Run Time");
+		grdResult.addColumn(ScTestResult::getTotalRunSize).setCaption("Total Run Size");
 		grdResult.addColumn(ScTestResult::getStatus).setCaption("Status").setWidthUndefined().setResizable(true);
-		
-//		grdResult.setColumnResizeMode(ColumnResizeMode.);
-//		
+
 		layout.addComponents(result, grdResult);
 		
 		return layout;
+	}
+	
+	class TestResultThread extends Thread {
+		@Override
+		public void run() {
+			try {
+				while(true) {
+					Thread.sleep(1000);
+					if(!isOnGoing) continue;
+					
+					TestResult clonedResult = TestUtils.getClonedResult();
+					if(clonedResult == null) continue;
+					
+					ui.access(() -> {
+						txtAvgRunTime.setValue(Long.toString(clonedResult.getAvgRunTime()));
+						txtMaxRunTime.setValue(Long.toString(clonedResult.getMaxRunTime()));
+						txtMinRunTime.setValue(Long.toString(clonedResult.getMinRunTime()));
+						txtTotalRunSize.setValue(Long.toString(clonedResult.getTotalRunSize()));
+						txtTotalRunTime.setValue(Long.toString(clonedResult.getTotalRunTime()));
+
+						testResultList.clear();
+						Map<String, TestResult> results = clonedResult.results;
+						for (String service : results.keySet()) {
+							TestResult tr = results.get(service);
+							ScTestResult result = new ScTestResult();
+							result.setServiceName(tr.getName());
+							result.setAvgTime(Long.toString(tr.getAvgRunTime()));
+							result.setMaxTime(Long.toString(tr.getMaxRunTime()));
+							result.setMinTime(Long.toString(tr.getMinRunTime()));
+							result.setTotalRunTime(Long.toString(tr.getTotalRunTime()));
+							result.setTotalRunSize(Long.toString(tr.getTotalRunSize()));
+							result.setStatus("200 OK");
+							testResultList.add(result);
+						}
+
+						grdResult.setItems(testResultList);
+					});
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
