@@ -4,7 +4,7 @@
 
 3. Embedded tomcat will be started. 
 
-4. http://localhost:8080/ui -> Performance ui will be opned.
+4. http://localhost:8080/ui -> Performance Test ui will be opned.
 
 5. select scenario and click the run button. 
 
